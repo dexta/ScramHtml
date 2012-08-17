@@ -1,0 +1,32 @@
+body {
+	background-image: url('../Background.jpg');
+	background-position:50% 0px;
+	background-color: black;
+	color: white;
+}
+
+.bullit {
+	overflow:auto;
+	height: 100px;
+}
+
+h1, h5{
+	border: 1px solid white;
+}
+
+.right {
+	text-align: right;
+}
+.left {
+	text-align: left;
+}
+
+.center {
+	text-align: center;
+}
+
+.fps {
+	//border: 1px solid white;
+	//text-align:center;
+	font-size: 1.2em;
+}

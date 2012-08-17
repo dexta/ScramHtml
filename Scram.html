@@ -1,0 +1,60 @@
+<!DOCTYPE>
+<html>
+<head>
+<script type="text/javascript" src="js/jquery.js"></script>
+<link rel="stylesheet" href="css/grid.css" />
+<link rel="stylesheet" href="css/formate.css" />
+<script language="JavaScript" src="js/Basic.js"></script>
+<script language="JavaScript" src="js/CollisionObjects.js"></script>
+<script language="JavaScript" src="js/StarFieldObject.js"></script>
+<script language="JavaScript" src="js/StarLayerObject.js"></script>
+<script language="JavaScript" src="js/spaceCraft.js"></script>
+<script language="JavaScript" src="js/bulletObjects.js"></script>
+<script language="JavaScript" src="js/Functions.js"></script>
+<script type="application/x-javascript">
+	$(document).ready(function() {
+		$('#debug').click( function () {
+			$('.debug').toggle();
+			DEBUG = (DEBUG)? false : true;
+			});
+		$('#pause').click(function(){
+			intervalSwitsh();
+			})
+			// *** start the canvas !!!!
+			init();	
+		});
+</script>
+<title>ScramHTML a Scramble Remake in only line Drawing Canvas Art</title>
+</head>
+<body>
+
+<div class="container_10">
+	<div class="clear"></div>
+	<div class="grid_2 right legend">Score:<span id="score">	0					</span>	</div>
+	<div class="grid_3 right legend">Fuel: <span id="fuel">		**********---------		</span>	</div>
+	<div class="grid_4 right legend">Level:<span id="level">	[**][*-][--][--][--]</span>	</div>
+	<div class="clear"></div>
+	<div class="grid_10 game">
+		<canvas id="canvas" width="900" height="350"></canvas>
+	</div>
+	<div class="clear"></div>
+	<div class="grid_2 info center"><h5 id="pause">				(this).pause		</h5></div>
+	<div class="grid_2 center"><h5 id="debug">					DEBUG on/off		</h5></div>
+	
+	<div class="grid_2 fps prefix_1">FPS:<span id="fps">	0					</span>	</div>
+	<div class="grid_2 fps prefix_1">ms :<span id="tpd">	0					</span>	</div>
+	<div class="clear"></div>
+
+	<div class="grid_3 tick debug right">landscape:	</div>
+	<div class="grid_7 tick debug" id="landscape">	</div>
+	<div class="clear"></div>
+	<div class="grid_10 debug" id="dmove"></div>
+	<div class="clear"></div>
+	<div class="grid_3 prefix_2 debug">shoot</div>
+	<div class="grid_3 prefix_2 debug">missile</div>
+	<div class="clear"></div>
+	<div class="grid_5 bullit debug" id="shoot">	</div>
+	<div class="grid_5 bullit debug" id="missile">	</div>
+</div>
+</body>
+</html>

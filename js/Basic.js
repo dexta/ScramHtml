@@ -23,7 +23,7 @@ function init(){
 	addObject(0,"starField",new starField(ctx,3,HEIGHT+25,WIDTH+201));
 	addObject(0,"starField",new starField(ctx,4,HEIGHT+25,WIDTH+301));
 	addObject(4,"starField",new starField(ctx,6,HEIGHT+25,WIDTH+401));
-	addObject(3,"ship",new spaceCraft(ctx,100,100));
+	addObject(3,"ship",new spaceCraft(ctx,400,100));
 	//collisionObjects.push(new enemyMountain(ctx,HEIGHT+25,WIDTH+201));
 	//starFieldLayer = new starField(ctx,5,HEIGHT+25,WIDTH+501);
 	//starFieldLayer.init();
@@ -51,6 +51,7 @@ function addObject(layer,objT,theObj) {
 		objByTyp.mountain.push(theObj);
 		}
 	if(objT == "enemy") {
+		collisionObjects.push(theObj);
 		
 		}
 	allObj[layer].push(theObj);	

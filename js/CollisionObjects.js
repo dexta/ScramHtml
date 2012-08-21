@@ -1,14 +1,15 @@
 enemyMountain = function(ctx,h,w) {
+	this.objTyp = "mountain";
 	this.height = h;
 	this.wight = w;
-	this.length = Math.floor(w/100);
+	this.mvWight = 100;
+	this.mvHeight = 50;
+	this.sectorLength = Math.floor(w/this.mvWight)+2;
 	this.canvas = ctx;
-	this.line = [2,2,3,3,3,4,4,5,5,6,6,5,5,5,3,3,3,2,2,3,4,4,5,5,6,6,3,2,2,6,6,2,2,3,3,2,2,2,2,1];
+	this.line = [1,2,3,2,3,2,4,5,5,6,6,5,5,5,3,3,3,2,2,3,4,4,5,5,6,6,3,2,2,6,6,2,2,3,3,2,2,2,2,1];
 	this.colorLines = "rgb(255,0,0)";		this.colorFill = "rgb(100,100,200)";
 	this.time = 0;
 	this.step = 1;
-	this.mvWight = 100;
-	this.mvHeight = 50;
 	
 	this.draw = function(t) {
 		this.canvas.fillStyle = this.colorFill;
@@ -16,11 +17,11 @@ enemyMountain = function(ctx,h,w) {
 		//this.canvas.lineWidth = 4;
 		this.canvas.beginPath();
 		this.canvas.moveTo(-200,this.lineToHeight(0));
-		for(mP=0;mP<this.length;mP++) {
+		for(mP=0;mP<this.sectorLength;mP++) {
 			if(mP*this.mvWight > this.wight+(this.mvWight*2)) continue;
 			this.canvas.lineTo(mP*this.mvWight,this.lineToHeight(mP));
 			}
-		this.canvas.lineTo((this.length-1)*this.mvWight,this.height);
+		this.canvas.lineTo((this.sectorLength-1)*this.mvWight,this.height);
 		this.canvas.lineTo(0,this.height);
 		this.canvas.stroke();
 		this.canvas.fill();

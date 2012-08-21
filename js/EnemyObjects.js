@@ -24,7 +24,10 @@ enemyObj = function(ctx,start,x,y,h,w) {
 	}
 	this.collision = function() {
 		return [[this.X,this.Y]];
-		}		
+		}
+	this.collisionCheck = function(cPoints) { 
+		return false;
+		}
 }
 
 
@@ -88,9 +91,20 @@ enemyMissile = function(canvas,start,x,y,h,w) {
 			this.firstExplode = false;	
 			}
 		}
-		this.collisionCheck = function(cPoints) {
-			return;
-			}
+		
 }
 
 enemyMissile.prototype = new enemyObj();
+
+
+
+testConf = function(conf) {
+	this.eins = 1;
+	this.zwei = 2;
+	this.drei = 3;
+	for(c in conf) {
+		this[c] = conf[c];
+		}
+	}
+
+testConf.prototype.testFunc = function(a) { return "back "+a;}

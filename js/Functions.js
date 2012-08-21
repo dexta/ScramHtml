@@ -22,6 +22,7 @@ function draw() {
 	for(var cco=0;cco<collisionCheckObjects.length;cco++) {
 		for(var co=0;co<collisionObjects.length;co++) {
 			if(collisionCheckObjects[cco] === myShip) continue;
+			if(collisionCheckObjects[cco] === "undefind") collisionCheckObjects.splice(cco,1);
 			if(collisionObjects[co].collisionCheck(collisionCheckObjects[cco].collision())) {
 				collisionCheckObjects[cco].explodeStart = true;
 				collisionCheckObjects.splice(cco,1);
@@ -47,7 +48,7 @@ function draw() {
 				}
 			}
 		$("#landscape").html(""+objByTyp.mountain[0].line);
-		
+		add_enemy();
 		}
 	lockDraw = false;		
 	$("#score").html(tick);

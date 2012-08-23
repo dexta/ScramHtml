@@ -1,4 +1,5 @@
-spaceObj = function(canvas,start,x,y) {
+spaceObj = function(canvas,start,x,y,conf) {
+	for(c in conf) { this[c] = conf[c];}
 	this.ctx = canvas;
 	this.start = start;
 	this.X = x;
@@ -17,8 +18,8 @@ ballistic = function(x,y,vx,vy,t) {
 		}
 	}
 	
-friendMissile = function(canvas,start,x,y) {
-	this.constructor(canvas,start,x,y);
+friendMissile = function(canvas,start,x,y,conf) {
+	this.constructor(canvas,start,x,y,conf);
 	this.ePoints = [];
 	this.firstExplode = true;
 	this.explodeLength = 42;
@@ -90,8 +91,8 @@ friendMissile = function(canvas,start,x,y) {
 	
 friendMissile.prototype = new spaceObj();
 
-friendLaser = function(canvas,start,x,y) {
-	this.constructor(canvas,start,x,y);
+friendLaser = function(canvas,start,x,y,conf) {
+	this.constructor(canvas,start,x,y,conf);
 	this.ePoints = [];
 	this.firstExplode = true;
 	this.explodeLength = 42;

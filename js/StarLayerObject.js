@@ -1,4 +1,5 @@
-starField = function(ctx,layer,h,w) {
+starField = function(ctx,layer,h,w,conf) {
+	for(c in conf) { this[c] = conf[c];}
 	this.init = false;
 	this.fieldSet = [];
 	this.canvas = ctx;

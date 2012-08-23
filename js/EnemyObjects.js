@@ -1,4 +1,5 @@
-enemyObj = function(ctx,start,x,y,h,w) {
+enemyObj = function(ctx,start,x,y,h,w,conf) {
+	for(c in conf) { this[c] = conf[c];}
 	this.canvas = ctx;
 	this.start = start;
 	this.X = x;
@@ -21,6 +22,7 @@ enemyObj = function(ctx,start,x,y,h,w) {
 				this.ePoints[a].x0 -= 100;
 				}
 			}
+		if(this.X < -100 || this.X > this.width*1.5 || this.Y < -50 || this.Y > this.height*1.5) this.explodeEnd = true;
 	}
 	this.collision = function() {
 		return [[this.X,this.Y]];
@@ -31,8 +33,8 @@ enemyObj = function(ctx,start,x,y,h,w) {
 }
 
 
-enemyMissile = function(canvas,start,x,y,h,w) {
-	this.constructor(canvas,start,x,y,h,w);
+enemyMissile = function(canvas,start,x,y,h,w,conf) {
+	this.constructor(canvas,start,x,y,h,w,conf);
 	this.onFly = false;
 	
 	

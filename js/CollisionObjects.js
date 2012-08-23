@@ -1,5 +1,5 @@
-enemyMountain = function(ctx,h,w) {
-	this.objTyp = "mountain";
+enemyMountain = function(ctx,h,w,conf) {
+	for(c in conf) { this[c] = conf[c];}
 	this.height = h;
 	this.wight = w;
 	this.mvWight = 100;

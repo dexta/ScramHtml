@@ -1,4 +1,5 @@
-spaceCraft = function(ctx,x,y) {
+spaceCraft = function(ctx,x,y,conf) {
+	for(c in conf) { this[c] = conf[c];}
 	this.X = x;
 	this.Y = y;
 	this.canvas = ctx;

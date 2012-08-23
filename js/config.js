@@ -32,7 +32,20 @@ configEnemy = {
 	scorePoints:100,
 	ePoints: [],
 	firstExplode: true,
-	explodeLength: 42,
+	explodeLength: 64,
+	explodeCount: 0,
+	explodeStart: false,
+	explodeEnd: false
+}
+
+configFuel = {
+	objTyp: "enemy",
+	layer: 2,
+	scorePoints:100,
+	fuelPoints:1,
+	ePoints: [],
+	firstExplode: true,
+	explodeLength: 84,
 	explodeCount: 0,
 	explodeStart: false,
 	explodeEnd: false

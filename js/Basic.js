@@ -1,5 +1,5 @@
 var tick;var sCount;var shootLock;var ctx;var WIDHT; var HEIGHT;
-var pause = true;	var intervalID = 0;	var intervalUpdate = (1000/60);
+var pause = true;	var intervalID = 0;	var intervalUpdate = (1000/50);
 var keys = {left:false,up:false,right:false,down:false,fire:false};
 var collisionObjects = [];var collisionCheckObjects = []; var drawLayer = [[],[],[],[],[],[]]; var starCraft; var bulletObjcts = [];
 var allObj = [];var objByTyp = {mountain:{},ship:{}};
@@ -20,11 +20,11 @@ function init(){
   	ctx.lineCap = "round";		
 	ctx.lineWidth = 2;
 	addObject(new enemyMountain(ctx,HEIGHT+25,WIDTH+201,configMountain));
-	addObject(new starField(ctx,1,HEIGHT+25,WIDTH+101,configStarField));
+//	addObject(new starField(ctx,1,HEIGHT+25,WIDTH+101,configStarField));
 	addObject(new starField(ctx,3,HEIGHT+25,WIDTH+201,configStarField));
-	addObject(new starField(ctx,4,HEIGHT+25,WIDTH+301,configStarField));
-	configStarField["layer"] = 4;
-	addObject(new starField(ctx,6,HEIGHT+25,WIDTH+401,configStarField));
+//	addObject(new starField(ctx,4,HEIGHT+25,WIDTH+301,configStarField));
+//	configStarField["layer"] = 4;
+//	addObject(new starField(ctx,6,HEIGHT+25,WIDTH+401,configStarField));
 	addObject(new spaceCraft(ctx,400,100,configSpaceCraft));
 	//collisionObjects.push(new enemyMountain(ctx,HEIGHT+25,WIDTH+201));
 	//starFieldLayer = new starField(ctx,5,HEIGHT+25,WIDTH+501);
@@ -93,21 +93,24 @@ $(document).keyup(function (e) {
 	});
 
 function enemyObjAdd(types,x,y) {
-	console.log(" x"+x+" y"+y+" types "+types+" length "+types.length);
+	//console.log(" x"+x+" y"+y+" types "+types+" length "+types.length);
 	if(types.length == 0) return;
 	for(var t=0;t<types.length;t++) {
 		if(types[t] == 1) {
 			addObject(new enemyMissile(ctx,tick,(x+20)+(t*30),y,HEIGHT,WIDHT,configEnemy));
-			console.log("in add "+t)
+			//console.log("in add "+t)
 			}
 		if(types[t] == 2) {
-			//addObject(2,"enemy",new enemyFule(ctx,tick,x,y,HEIGHT,WIDHT));
+			addObject(new enemyFuel(ctx,tick,(x+20)+(t*30),y,HEIGHT,WIDHT,configFuel));
+			}
+		if(types[t] == 3) {
+			addObject(new enemyAntenna(ctx,tick,(x+20)+(t*30),y,HEIGHT,WIDHT,configFuel));
 			}
 		}
 	}
 
 function get_rnd_enemy() {
-	var rndEnemys = [[1,2,1],[2,1,1],[1,1,1],[1,0,1],[0,0,1],[1,1,2],[0,1,0]];
+	var rndEnemys = [[1,2,1],[2,1,1],[1,1,1],[1,2,1],[2,3,1],[1,1,3],[2,1,3],[1,3,1],[2,1,3],[2,1,2],[2,2,1]];
 	var rndNo = 0;
 	rndNo = Math.floor((Math.random()*65423))%rndEnemys.length;
 	return rndEnemys[rndNo];
@@ -123,7 +126,7 @@ function add_enemy(sector) {
 	var mH = objByTyp.mountain.mvHeight;
 	var cornerX = mW*s;
 	var cornerY = objByTyp.mountain.lineToHeight(s);
-	console.log("sector "+s+" cX "+cornerX+" cY "+cornerY+" enemys "+enemyTypes);
+	//console.log("sector "+s+" cX "+cornerX+" cY "+cornerY+" enemys "+enemyTypes);
 	//console.log("enemy Line "+enemyLine);
 	enemyObjAdd(enemyTypes,cornerX,cornerY);
 	
@@ -133,40 +136,5 @@ function set_enemyLine() {
 	var sL = objByTyp.mountain.sectorLength;
 	for(s=0;s<sL;s++) {
 		add_enemy(s);
-		}
-	}
-
-function old_set_enemyLine() {
-	var mL = objByTyp.mountain.line;
-	enemyLine = [[],[]];
-	var rndEnemys = [[1,2,1],[2,1,1],[1,1,1],[1,0,1],[0,0,1],[1,1,2],[0,1,0]];
-	var rndNo = 0;
-	for(s=2;s<mL.length-2;s++) {
-		if(mL[s] == mL[s+1] && mL[s+1] == mL[s+2]) {
-			enemyLine[s] = [1,2,2];
-			} else if(mL[s] == mL[s+1] && mL[s] == mL[s-1]) {
-				enemyLine[s] = [2,2,1];
-			} else if(mL[s] == mL[s+1]) {
-				rndNo = Math.floor((Math.random()*65423))%rndEnemys.length;
-				enemyLine[s] = rndEnemys[rndNo];
-			} else { enemyLine[s] = []; }
-		}
-		
-	var sL = objByTyp.mountain.sectorLength;
-	var mW = objByTyp.mountain.mvWight;
-	var mH = objByTyp.mountain.mvHeight;
-	var cornerX;var cornerY;
-	for(s=2;s<sL;s++) {
-		cornerX = mW*s;
-		cornerY = objByTyp.mountain.lineToHeight(s);
-		enemyObjAdd(enemyLine[s],cornerX,cornerY);
-		enemyLine.push(enemyLine[s]);
-		}
-	enemyLine.splice(0,sL);
-	}
-
-function test_random() {
-	for(r=0;r<100;r++) {
-		console.log(Math.floor(Math.random()*100000)%1000);
 		}
 	}

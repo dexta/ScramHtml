@@ -99,14 +99,190 @@ enemyMissile = function(canvas,start,x,y,h,w,conf) {
 enemyMissile.prototype = new enemyObj();
 
 
-
-testConf = function(conf) {
-	this.eins = 1;
-	this.zwei = 2;
-	this.drei = 3;
-	for(c in conf) {
-		this[c] = conf[c];
+enemyFuel = function(canvas,start,x,y,h,w,conf) {
+	this.constructor(canvas,start,x,y,h,w,conf);
+	this.update = function(t) {
+		//this.X -= 1;
+		return [this.X,this.Y];
 		}
-	}
+	
+	this.draw = function(t) {
+		if(!this.explodeStart) { this.cast(); }else{ this.explode(t);}
+		}
+	
+	this.collision = function() {
+		return "over written";
+		}
+	
+	this.cast = function() {
+		ctx.fillStyle = "rgb(100,155,100)";
+		ctx.strokeStyle = "rgb(10,125,10)";
+		ctx.beginPath();
+		ctx.moveTo(this.X-10,this.Y-5);
+		ctx.lineTo(this.X-10,this.Y-5);
+		ctx.lineTo(this.X-15,this.Y-15);
+		ctx.lineTo(this.X-10,this.Y-20);
+		ctx.lineTo(this.X-5,this.Y-25);
+		ctx.lineTo(this.X+5,this.Y-25);
+		ctx.lineTo(this.X+10,this.Y-20);
+		ctx.lineTo(this.X+15,this.Y-15);
+		ctx.lineTo(this.X+10,this.Y-5);
+		ctx.fill();
+		ctx.stroke();
+		ctx.strokeStyle = "rgb(100,155,100)";
+		ctx.beginPath();
+		ctx.lineWidth = 4;
+		ctx.moveTo(this.X-15,this.Y);
+		ctx.lineTo(this.X-10,this.Y-5);
+		ctx.lineTo(this.X+10,this.Y-5);
+		ctx.lineTo(this.X+15,this.Y);
+		ctx.stroke();
+		
+		ctx.beginPath();		
+		ctx.strokeStyle = "rgb(100,125,100)";
+		ctx.lineWidth = 2;
+		ctx.moveTo(this.X-3,this.Y-6);
+		ctx.lineTo(this.X-3,this.Y-20);
+		ctx.lineTo(this.X+5,this.Y-20);
+		ctx.moveTo(this.X-3,this.Y-12);
+		ctx.lineTo(this.X+2,this.Y-12);	
+		ctx.stroke();
+		}
+	
+	this.explode = function(t) {
+		if(!this.firstExplode) {
+			if(this.explodeCount>this.explodeLength) { this.explodeEnd = true; return; }
+			ctx.fillStyle = "rgb(255,150,150)";
+			ctx.strokeStyle = "rgb(250,150,150)";
+			for(var a=0;a<this.ePoints.length;a++) {
+				this.ePoints[a].update(t);
+				ctx.beginPath();
+				ctx.moveTo(this.ePoints[a].x0+(-1*this.ePoints[a].vx0),this.ePoints[a].y0+(-1*this.ePoints[a].vy0));
+				ctx.lineTo(this.ePoints[a].x0,this.ePoints[a].y0);
+				ctx.fill();
+				ctx.stroke();
+				//console.log("expl. point"+a+" kord "+this.ePoints[a].x0+" - "+this.ePoints[a].y0);
+				}
+			this.explodeCount++;
+			} else {
+			var rad = 2*Math.PI/36; //10 elements
+			var radius = 2;
+			var rStart = Math.floor(Math.random()*65536)%7;
+			for(var a=17+rStart;a<29+rStart;a+=3) {
+				var x = this.X+radius*Math.cos(rad*a);
+				var y = this.Y+radius*Math.sin(rad*a);
+				var xx = this.X+.1*Math.cos(rad*a);
+				var yy = this.Y+.1*Math.sin(rad*a);
+				this.ePoints.push(new ballistic(x,y,x-xx,y-yy,t));
+				}
+			this.firstExplode = false;	
+			}
+		}	
+}
 
-testConf.prototype.testFunc = function(a) { return "back "+a;}
+enemyFuel.prototype = new enemyObj();
+
+
+enemyAntenna = function(canvas,start,x,y,h,w,conf) {
+	this.constructor(canvas,start,x,y,h,w,conf);
+	this.update = function(t) {
+		//this.X -= 1;
+		return [this.X,this.Y];
+		}
+	
+	this.draw = function(t) {
+		if(!this.explodeStart) { this.cast(); }else{ this.explode(t);}
+		}
+	
+	this.collision = function() {
+		return "over written";
+		}
+	
+	this.cast = function() {
+		ctx.fillStyle = "rgb(184,84,84)";
+		ctx.strokeStyle = "rgb(142,42,42)";
+		ctx.lineWidth = 4;
+		
+		ctx.beginPath();
+		ctx.moveTo(this.X,this.Y);
+		ctx.lineTo(this.X,this.Y-30);
+		ctx.stroke();
+		ctx.lineWidth = 1;
+		ctx.beginPath();
+		ctx.arc(this.X,this.Y-15,11,0,1*Math.PI);
+		ctx.fill();
+		ctx.stroke();
+		ctx.beginPath();
+		ctx.arc(this.X,this.Y-23,6,0,1*Math.PI);
+		ctx.fill();
+		ctx.stroke();
+		ctx.beginPath();
+		ctx.arc(this.X,this.Y-29,3,0,1*Math.PI);
+		ctx.fill();
+		ctx.stroke();
+		ctx.lineWidth = 2;
+		//ctx.moveTo(this.X-10,this.Y-5);
+		//ctx.lineTo(this.X-10,this.Y-5);
+		//ctx.lineTo(this.X-15,this.Y-15);
+		//ctx.lineTo(this.X-10,this.Y-20);
+		//ctx.lineTo(this.X-5,this.Y-25);
+		//ctx.lineTo(this.X+5,this.Y-25);
+		//ctx.lineTo(this.X+10,this.Y-20);
+		//ctx.lineTo(this.X+15,this.Y-15);
+		//ctx.lineTo(this.X+10,this.Y-5);
+		//ctx.fill();
+		//ctx.stroke();
+		//ctx.strokeStyle = "rgb(100,155,100)";
+		//ctx.beginPath();
+		//ctx.lineWidth = 4;
+		//ctx.moveTo(this.X-15,this.Y);
+		//ctx.lineTo(this.X-10,this.Y-5);
+		//ctx.lineTo(this.X+10,this.Y-5);
+		//ctx.lineTo(this.X+15,this.Y);
+		//ctx.stroke();
+		
+		//ctx.beginPath();		
+		//ctx.strokeStyle = "rgb(100,125,100)";
+		//ctx.lineWidth = 2;
+		//ctx.moveTo(this.X-3,this.Y-6);
+		//ctx.lineTo(this.X-3,this.Y-20);
+		//ctx.lineTo(this.X+5,this.Y-20);
+		//ctx.moveTo(this.X-3,this.Y-12);
+		//ctx.lineTo(this.X+2,this.Y-12);	
+		//ctx.stroke();
+		}
+	
+	this.explode = function(t) {
+		if(!this.firstExplode) {
+			if(this.explodeCount>this.explodeLength) { this.explodeEnd = true; return; }
+			ctx.fillStyle = "rgb(255,150,150)";
+			ctx.strokeStyle = "rgb(250,150,150)";
+			for(var a=0;a<this.ePoints.length;a++) {
+				this.ePoints[a].update(t);
+				ctx.beginPath();
+				ctx.moveTo(this.ePoints[a].x0+(-1*this.ePoints[a].vx0),this.ePoints[a].y0+(-1*this.ePoints[a].vy0));
+				ctx.lineTo(this.ePoints[a].x0,this.ePoints[a].y0);
+				ctx.fill();
+				ctx.stroke();
+				//console.log("expl. point"+a+" kord "+this.ePoints[a].x0+" - "+this.ePoints[a].y0);
+				}
+			this.explodeCount++;
+			} else {
+			var rad = 2*Math.PI/36; //10 elements
+			var radius = 2;
+			var rStart = Math.floor(Math.random()*65536)%7;
+			for(var a=17+rStart;a<29+rStart;a+=3) {
+				var x = this.X+radius*Math.cos(rad*a);
+				var y = this.Y+radius*Math.sin(rad*a);
+				var xx = this.X+.1*Math.cos(rad*a);
+				var yy = this.Y+.1*Math.sin(rad*a);
+				this.ePoints.push(new ballistic(x,y,x-xx,y-yy,t));
+				}
+			this.firstExplode = false;	
+			}
+		}
+		
+	}
+		
+enemyAntenna.prototype = new enemyObj();
+

@@ -28,11 +28,12 @@ function draw() {
 		if(allObj[a].objTyp == "mountain") collisionObjects.push(allObj[a]);
 		}
 
-	for(var cco=0;cco<collisionCheckObjects.length;cco++) {
-		for(var co=0;co<collisionObjects.length;co++) {
-			if(collisionObjects[co].collisionCheck(collisionCheckObjects[cco].collision())) {
-				collisionCheckObjects[cco].explodeStart = true;
-				}
+	for(var co=0;co<collisionObjects.length;co++) {
+		//console.log("coll co "+co);
+		chkCol.getCheckPoint(collisionObjects[co].getPolygon());
+		for(var cco=0;cco<collisionCheckObjects.length;cco++) {
+			chkCol.checkPoint(collisionCheckObjects[cco].collision());
+			collisionCheckObjects[cco].explodeStart = (chkCol.box() || chkCol.tri())? true:false;
 			} // end collisionObjects
 		} // end collisionCheckObjects
 	for(var a=0;a<drawLayer.length;a++) {

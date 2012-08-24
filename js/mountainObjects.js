@@ -6,7 +6,7 @@ enemyMountain = function(ctx,h,w,conf) {
 	this.mvHeight = 50;
 	this.sectorLength = Math.floor(w/this.mvWight)+2;
 	this.canvas = ctx;
-	this.line = [1,2,3,2,3,2,4,5,5,6,6,5,5,5,3,3,3,2,2,3,4,4,5,5,6,6,3,2,2,6,6,2,2,3,3,2,2,2,2,1];
+	this.line = [2,2,3,3,3,2,4,5,5,6,6,5,5,5,3,3,3,2,2,3,4,4,5,5,6,6,3,2,2,6,6,2,2,3,3,2,2,2,2,1];
 	this.colorLines = "rgb(255,0,0)";		this.colorFill = "rgb(100,100,200)";
 	this.time = 0;
 	this.step = 1;

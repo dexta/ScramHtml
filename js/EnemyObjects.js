@@ -101,6 +101,22 @@ enemyMissile = function(canvas,start,x,y,h,w,conf) {
 			}
 		}
 		
+	this.boxTest = function(points) {
+		if(points[0]>this.X-7 && points[1]>this.Y-30) {
+			if(points[0]<this.X+7 && points[1]<this.Y) {
+				//console.log(points);
+				return true;
+				}
+			}
+		}	
+		
+	this.collisionCheck = function(cPoints) { 
+		
+		for(var c=0;c<cPoints.length;c++) {
+			if(this.boxTest(cPoints[c])) return true;
+			}
+		return false;	
+		}
 }
 
 enemyMissile.prototype = new enemyObj();

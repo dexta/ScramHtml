@@ -26,12 +26,15 @@ function draw() {
 			if(!allObj[a].explodeStart) collisionCheckObjects.push(allObj[a]);
 			}
 		if(allObj[a].objTyp == "mountain") collisionObjects.push(allObj[a]);
+		if(allObj[a].objTyp == "enemy") collisionObjects.push(allObj[a]);
+		
 		}
 
 	for(var cco=0;cco<collisionCheckObjects.length;cco++) {
 		for(var co=0;co<collisionObjects.length;co++) {
 			if(collisionObjects[co].collisionCheck(collisionCheckObjects[cco].collision())) {
 				collisionCheckObjects[cco].explodeStart = true;
+				if(collisionObjects[co].objTyp == "enemy") collisionObjects[co].explodeStart = true;
 				}
 			} // end collisionObjects
 		} // end collisionCheckObjects

@@ -1,4 +1,4 @@
-check = function() {
+checkCollision = function() {
 	this.boxTest = function(cPoint,bPoints) {
 		if(bPoints[0][1] == bPoints[1][1]) bPoints[1][1] = this.height;
 		var x1 = (bPoints[0][0]<bPoints[1][0])? bPoints[0][0]:bPoints[1][0];

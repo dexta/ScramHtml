@@ -50,7 +50,14 @@ enemyMissile = function(canvas,start,x,y,h,w,conf) {
 	this.collision = function() {
 		return "over written";
 		}
-	
+	this.getPolygon = function() {
+		var poly = [];
+		var tTri = [];var x3,y3;
+		poly.push([[this.X-7,this.Y],[this.X,this.Y-30],[this.X,this.Y]]);
+		poly.push([[this.X,this.Y-30],[this.X+7,this.Y],[this.X,this.Y]]);
+		return poly;
+		}
+		
 	this.cast = function() {
 		ctx.fillStyle = "rgb(200,190,190)";
 		ctx.strokeStyle = "rgb(20,190,190)";
@@ -113,6 +120,13 @@ enemyFuel = function(canvas,start,x,y,h,w,conf) {
 	this.collision = function() {
 		return "over written";
 		}
+	this.getPolygon = function() {
+		var poly = [];
+		var tTri = [];var x3,y3;
+		poly.push([[this.X-7,this.Y],[this.X,this.Y-30],[this.X,this.Y]]);
+		poly.push([[this.X,this.Y-30],[this.X+7,this.Y],[this.X,this.Y]]);
+		return poly;
+		} // copy from Rocket please change
 	
 	this.cast = function() {
 		ctx.fillStyle = "rgb(100,155,100)";
@@ -197,6 +211,15 @@ enemyAntenna = function(canvas,start,x,y,h,w,conf) {
 	this.collision = function() {
 		return "over written";
 		}
+	
+	
+	this.getPolygon = function() {
+		var poly = [];
+		var tTri = [];var x3,y3;
+		poly.push([[this.X-7,this.Y],[this.X,this.Y-30],[this.X,this.Y]]);
+		poly.push([[this.X,this.Y-30],[this.X+7,this.Y],[this.X,this.Y]]);
+		return poly;
+		} // copy from Rocket please change
 	
 	this.cast = function() {
 		ctx.fillStyle = "rgb(184,84,84)";

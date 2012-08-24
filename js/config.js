@@ -3,21 +3,25 @@
 
 configMountain = {
 	objTyp: "mountain",
+	collisionTyp: "get",
 	layer: 1
 }
 
 configStarField = {
 	objTyp: "starfield",
+	collisionTyp: "none",
 	layer: 0
 }
 
 configSpaceCraft = {
 	objTyp: "ship",
+	collisionTyp: "check",
 	layer: 3
 }
 
 configBullets = {
 	objTyp: "bullet",
+	collisionTyp: "check",
 	layer: 2,
 	firstExplode: true,
 	explodeLength: 42,
@@ -28,6 +32,7 @@ configBullets = {
 
 configEnemy = {
 	objTyp: "enemy",
+	collisionTyp: "get",
 	layer: 2,
 	scorePoints:100,
 	ePoints: [],
@@ -40,6 +45,7 @@ configEnemy = {
 
 configFuel = {
 	objTyp: "enemy",
+	collisionTyp: "get",	
 	layer: 2,
 	scorePoints:100,
 	fuelPoints:1,

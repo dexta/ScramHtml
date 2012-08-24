@@ -3,7 +3,7 @@ var pause = true;	var intervalID = 0;	var intervalUpdate = (1000/50);
 var keys = {left:false,up:false,right:false,down:false,fire:false};
 var collisionObjects = [];var collisionCheckObjects = []; var drawLayer = [[],[],[],[],[],[]]; var starCraft; var bulletObjcts = [];
 var allObj = [];var objByTyp = {mountain:{},ship:{}};
-var enemyLine = [];
+var chkCol;
 var lockDraw = false;
 var fps = 0,tpd=0,now,lastUpdate = (new Date)*1 -1;
 var fpsFilter = 50;
@@ -17,6 +17,7 @@ function init(){
 	ctx = $("#canvas")[0].getContext('2d');
 	WIDTH = $("#canvas").width();
   	HEIGHT = $("#canvas").height();
+  	chkCol = new checkCollision();
   	ctx.lineCap = "round";		
 	ctx.lineWidth = 2;
 	addObject(new enemyMountain(ctx,HEIGHT+25,WIDTH+201,configMountain));

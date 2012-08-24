@@ -57,6 +57,26 @@ enemyMountain = function(ctx,h,w,conf) {
 			
 		return false;
 		}
+	
+	
+	this.getPolygon = function() {
+		var poly = [];
+		var tTri,x3,y3;
+		for(tr=0;tr<this.sectorLength;tr++) {
+			if(this.line[tr] == this.line[tr+1]) {
+				poly.push([[tr*this.mvWight,this.lineToHeight(tr)],[(tr+1)*this.mvWight,this.lineToHeight(tr+1)]])
+			} else {
+				tTri = [];
+				tTri.push([tr*this.mvWight,this.lineToHeight(tr)]);	
+				tTri.push([(tr+1)*this.mvWight,this.lineToHeight(tr+1)]);
+				x3 = (tTri[0][1]<tTri[1][1])? tTri[0][0]:tTri[1][0];
+				y3 = (tTri[0][1]>tTri[1][1])? tTri[0][1]:tTri[1][1];
+				poly.push([tTri[0],tTri[1],[x3,y3]]);
+				}
+			}
+		return poly;
+		}
+	
 		
 	this.collisionCheck = function(cPoints) {
 		for(var c=0;c<cPoints.length;c++) {

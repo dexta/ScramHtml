@@ -58,22 +58,6 @@ function draw() {
 		add_enemy(objByTyp.mountain.sectorLength);
 		}
 	
-	clearCTX();
-	for(var a=0;a<drawLayer.length;a++) {
-		if(drawLayer[a].length == 0) continue;
-		for(var ai=0;ai<drawLayer[a].length;ai++) {
-			drawLayer[a][ai].canvas = ctx;
-			drawLayer[a][ai].draw(tick);
-			}
-		}
-	if(canToDraw == 0) { 
-		$("#"+canvasName[0]).css("z-index","0");
-		$("#"+canvasName[1]).css("z-index","1");
-		} else {
-		$("#"+canvasName[0]).css("z-index","1");
-		$("#"+canvasName[1]).css("z-index","0");	
-		}
-		
 	lockDraw = false;		
 	$("#score").html(tick);
 	$("#fps").html(""+roto(fps,4));
@@ -82,5 +66,12 @@ function draw() {
 
 
 function bDraw() {
-	
+	if(lockDraw) return;
+	clearCTX();
+	for(var a=0;a<drawLayer.length;a++) {
+		if(drawLayer[a].length == 0) continue;
+		for(var ai=0;ai<drawLayer[a].length;ai++) {
+			drawLayer[a][ai].draw(tick);
+			}
+		}
 	}

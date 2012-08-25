@@ -31,7 +31,7 @@ function init(){
 	addObject(new starField(ctx,6,HEIGHT+25,WIDTH+401,configStarField));
 	addObject(new spaceCraft(ctx,400,100,configSpaceCraft));
 	set_enemyLine();
-	//intervalSwitsh();
+	intervalSwitsh();
 	startLoop();
 }
 
@@ -46,7 +46,7 @@ function addObject(theObj) {
 function startLoop()
 {
     requestAnimFrame(startLoop);
-    draw();
+    bDraw();
 }
 
 function intervalSwitsh() {

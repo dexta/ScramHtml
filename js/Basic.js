@@ -1,9 +1,10 @@
 var tick;var sCount;var shootLock;var ctx;var WIDHT; var HEIGHT;
-var pause = true;	var intervalID = 0;	var intervalUpdate = (1000/60);
+var pause = true;	var intervalID = 0;	var intervalUpdate = (1000/65);
 var keys = {left:false,up:false,right:false,down:false,fire:false};
 var collisionObjects = [];var collisionCheckObjects = []; var drawLayer = [[],[],[],[],[],[]]; var starCraft; var bulletObjcts = [];
 var allObj = [];var objByTyp = {mountain:{},ship:{}};
 var chkCol;
+var canvasName = ["canvas","canvas1"]; var canToDraw = 0; var ctxG1; var ctxG2;
 var lockDraw = false;
 var fps = 0,tpd=0,now,lastUpdate = (new Date)*1 -1;
 var fpsFilter = 50;
@@ -15,6 +16,8 @@ function init(){
 	sCount = 0;
 	shootLock = 0;
 	ctx = $("#canvas")[0].getContext('2d');
+	ctxG1 = $("#canvas")[0].getContext('2d');
+	ctxG2 = $("#canvas1")[0].getContext('2d');
 	WIDTH = $("#canvas").width();
   	HEIGHT = $("#canvas").height();
   	chkCol = new checkCollision();
@@ -28,7 +31,8 @@ function init(){
 	addObject(new starField(ctx,6,HEIGHT+25,WIDTH+401,configStarField));
 	addObject(new spaceCraft(ctx,400,100,configSpaceCraft));
 	set_enemyLine();
-	intervalSwitsh();
+	//intervalSwitsh();
+	startLoop();
 }
 
 function addObject(theObj) {

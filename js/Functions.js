@@ -5,10 +5,14 @@ function draw() {
 	thisFrame = 1000 / (now-lastUpdate);
 	fps += (thisFrame - fps) / fpsFilter;
 	lastUpdate = now;
-	clearCTX();
+	//clearCTX();
 	drawLayer = [[],[],[],[],[],[]];
 	collisionCheckObjects = [];
 	collisionObjects = [];
+	
+	//canToDraw = (canToDraw == 0)? 1:0;
+	//ctx = $("#"+canvasName[canToDraw])[0].getContext('2d');
+	
 	for(var a=0;a<allObj.length;a++) {
 		allObj[a].update(tick);
 		drawLayer[allObj[a].layer].push(allObj[a]);
@@ -38,17 +42,14 @@ function draw() {
 				}
 			} // end collisionObjects
 		} // end collisionCheckObjects
-	for(var a=0;a<drawLayer.length;a++) {
-			if(drawLayer[a].length == 0) continue;
-			for(var ai=0;ai<drawLayer[a].length;ai++) {
-				drawLayer[a][ai].draw(tick);
-			}
-		}
+
 	//ctx.translate(-1,0);
 	tick++;
-	lockDraw = false;
+	
 	if(tick%100 == 0) {
 		//console.log("switsch "+tick);
+		//ctxG1.translate(100,0);
+		//ctxG2.translate(100,0);
 		ctx.translate(100,0);
 		for(var a=0;a<allObj.length;a++) {
 				allObj[a].nextSector();		
@@ -56,8 +57,30 @@ function draw() {
 		//$("#landscape").html(""+objByTyp.mountain[0].line);
 		add_enemy(objByTyp.mountain.sectorLength);
 		}
-			
+	
+	clearCTX();
+	for(var a=0;a<drawLayer.length;a++) {
+		if(drawLayer[a].length == 0) continue;
+		for(var ai=0;ai<drawLayer[a].length;ai++) {
+			drawLayer[a][ai].canvas = ctx;
+			drawLayer[a][ai].draw(tick);
+			}
+		}
+	if(canToDraw == 0) { 
+		$("#"+canvasName[0]).css("z-index","0");
+		$("#"+canvasName[1]).css("z-index","1");
+		} else {
+		$("#"+canvasName[0]).css("z-index","1");
+		$("#"+canvasName[1]).css("z-index","0");	
+		}
+		
+	lockDraw = false;		
 	$("#score").html(tick);
 	$("#fps").html(""+roto(fps,4));
 	draw_time();
 }
+
+
+function bDraw() {
+	
+	}

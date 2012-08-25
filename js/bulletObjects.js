@@ -1,6 +1,6 @@
-spaceObj = function(canvas,start,x,y,conf) {
+spaceObj = function(ctx,start,x,y,conf) {
 	for(c in conf) { this[c] = conf[c];}
-	this.ctx = canvas;
+	this.canvas = ctx;
 	this.start = start;
 	this.X = x;
 	this.Y = y;
@@ -18,8 +18,8 @@ ballistic = function(x,y,vx,vy,t) {
 		}
 	}
 	
-friendMissile = function(canvas,start,x,y,conf) {
-	this.constructor(canvas,start,x,y,conf);
+friendMissile = function(ctx,start,x,y,conf) {
+	this.constructor(ctx,start,x,y,conf);
 	this.ePoints = [];
 	this.firstExplode = true;
 	this.explodeLength = 42;
@@ -48,28 +48,28 @@ friendMissile = function(canvas,start,x,y,conf) {
 			}
 		}	
 	this.cast = function() {
-		ctx.fillStyle = "rgb(255,0,0)";
-		ctx.strokeStyle = "rgb(250,0,0)";
-		ctx.beginPath();
-		ctx.moveTo(this.X,this.Y);
-		ctx.lineTo(this.X,this.Y-9)
-		ctx.lineTo(this.X-1,this.Y-6)
-		ctx.lineTo(this.X,this.Y)
-		ctx.fill();
-		ctx.stroke();
+		this.canvas.fillStyle = "rgb(255,0,0)";
+		this.canvas.strokeStyle = "rgb(250,0,0)";
+		this.canvas.beginPath();
+		this.canvas.moveTo(this.X,this.Y);
+		this.canvas.lineTo(this.X,this.Y-9)
+		this.canvas.lineTo(this.X-1,this.Y-6)
+		this.canvas.lineTo(this.X,this.Y)
+		this.canvas.fill();
+		this.canvas.stroke();
 		}
 	this.explode = function(t) {
 		if(!this.firstExplode) {
 			if(this.explodeCount>this.explodeLength) { this.explodeEnd = true; return; }
-			ctx.fillStyle = "rgb(255,150,150)";
-			ctx.strokeStyle = "rgb(250,150,150)";
+			this.canvas.fillStyle = "rgb(255,150,150)";
+			this.canvas.strokeStyle = "rgb(250,150,150)";
 			for(var a=0;a<this.ePoints.length;a++) {
 				this.ePoints[a].update(t);
-				ctx.beginPath();
-				ctx.moveTo(this.ePoints[a].x0+(-1*this.ePoints[a].vx0),this.ePoints[a].y0+(-1*this.ePoints[a].vy0));
-				ctx.lineTo(this.ePoints[a].x0,this.ePoints[a].y0);
-				ctx.fill();
-				ctx.stroke();
+				this.canvas.beginPath();
+				this.canvas.moveTo(this.ePoints[a].x0+(-1*this.ePoints[a].vx0),this.ePoints[a].y0+(-1*this.ePoints[a].vy0));
+				this.canvas.lineTo(this.ePoints[a].x0,this.ePoints[a].y0);
+				this.canvas.fill();
+				this.canvas.stroke();
 				//console.log("expl. point"+a+" kord "+this.ePoints[a].x0+" - "+this.ePoints[a].y0);
 				}
 			this.explodeCount++;
@@ -91,8 +91,8 @@ friendMissile = function(canvas,start,x,y,conf) {
 	
 friendMissile.prototype = new spaceObj();
 
-friendLaser = function(canvas,start,x,y,conf) {
-	this.constructor(canvas,start,x,y,conf);
+friendLaser = function(ctx,start,x,y,conf) {
+	this.constructor(ctx,start,x,y,conf);
 	this.ePoints = [];
 	this.firstExplode = true;
 	this.explodeLength = 42;
@@ -122,15 +122,15 @@ friendLaser = function(canvas,start,x,y,conf) {
 		}
 	this.cast = function() {
 		if(this.X>2000) this.explodeEnd = true;
-		ctx.fillStyle = "rgb(255,255,0)";
-		ctx.strokeStyle = "rgb(250,10,0)";
-		ctx.beginPath();
-		ctx.moveTo(this.X,this.Y);
-		ctx.lineTo(this.X-15,this.Y+1)
-		ctx.lineTo(this.X-15,this.Y-1)
-		ctx.lineTo(this.X,this.Y)
-		ctx.fill();
-		ctx.stroke();
+		this.canvas.fillStyle = "rgb(255,255,0)";
+		this.canvas.strokeStyle = "rgb(250,10,0)";
+		this.canvas.beginPath();
+		this.canvas.moveTo(this.X,this.Y);
+		this.canvas.lineTo(this.X-15,this.Y+1)
+		this.canvas.lineTo(this.X-15,this.Y-1)
+		this.canvas.lineTo(this.X,this.Y)
+		this.canvas.fill();
+		this.canvas.stroke();
 		}
 	this.explode = function(t) {
 		if(!this.firstExplode) {
@@ -138,15 +138,15 @@ friendLaser = function(canvas,start,x,y,conf) {
 			var cU = Math.floor(255*(this.explodeCount/this.explodeLength));
 			var cD = 255-cU;
 			//console.log(cU,cD);
-			ctx.fillStyle = "rgb(255,"+cU+",0)";
-			ctx.strokeStyle = "rgb(255,"+cU+",0)";
+			this.canvas.fillStyle = "rgb(255,"+cU+",0)";
+			this.canvas.strokeStyle = "rgb(255,"+cU+",0)";
 			for(var a=0;a<this.ePoints.length;a++) {
 				this.ePoints[a].update(t);
-				ctx.beginPath();
-				ctx.moveTo(this.ePoints[a].x0+(-1*this.ePoints[a].vx0),this.ePoints[a].y0+(-1*this.ePoints[a].vy0));
-				ctx.lineTo(this.ePoints[a].x0,this.ePoints[a].y0);
-				ctx.fill();
-				ctx.stroke();
+				this.canvas.beginPath();
+				this.canvas.moveTo(this.ePoints[a].x0+(-1*this.ePoints[a].vx0),this.ePoints[a].y0+(-1*this.ePoints[a].vy0));
+				this.canvas.lineTo(this.ePoints[a].x0,this.ePoints[a].y0);
+				this.canvas.fill();
+				this.canvas.stroke();
 				//console.log("expl. point"+a+" kord "+this.ePoints[a].x0+" - "+this.ePoints[a].y0);
 				}
 			this.explodeCount++;	

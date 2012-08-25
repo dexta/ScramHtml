@@ -26,7 +26,7 @@ function draw() {
 			if(!allObj[a].explodeStart) collisionCheckObjects.push(allObj[a]);
 			}
 		if(allObj[a].objTyp == "mountain") collisionObjects.push(allObj[a]);
-		if(allObj[a].objTyp == "enemy") collisionObjects.push(allObj[a]);
+		if(allObj[a].objTyp == "enemy" && allObj[a].explodeStart == false) collisionObjects.push(allObj[a]);
 		
 		}
 
@@ -46,6 +46,7 @@ function draw() {
 		}
 	//ctx.translate(-1,0);
 	tick++;
+	lockDraw = false;
 	if(tick%100 == 0) {
 		//console.log("switsch "+tick);
 		ctx.translate(100,0);
@@ -55,7 +56,7 @@ function draw() {
 		//$("#landscape").html(""+objByTyp.mountain[0].line);
 		add_enemy(objByTyp.mountain.sectorLength);
 		}
-	lockDraw = false;		
+			
 	$("#score").html(tick);
 	$("#fps").html(""+roto(fps,4));
 	draw_time();

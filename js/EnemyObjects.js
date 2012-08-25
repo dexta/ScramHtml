@@ -104,10 +104,10 @@ enemyMissile = function(canvas,start,x,y,h,w,conf) {
 	this.boxTest = function(points) {
 		if(points[0]>this.X-7 && points[1]>this.Y-30) {
 			if(points[0]<this.X+7 && points[1]<this.Y) {
-				//console.log(points);
 				return true;
 				}
 			}
+		return false;
 		}	
 		
 	this.collisionCheck = function(cPoints) { 
@@ -207,6 +207,23 @@ enemyFuel = function(canvas,start,x,y,h,w,conf) {
 				}
 			this.firstExplode = false;	
 			}
+		}
+	
+	this.boxTest = function(points) {
+		if(points[0]>this.X-15 && points[1]>this.Y-25) {
+			if(points[0]<this.X+15 && points[1]<this.Y) {
+				return true;
+				}
+			}
+		return false;
+		}	
+		
+	this.collisionCheck = function(cPoints) { 
+		
+		for(var c=0;c<cPoints.length;c++) {
+			if(this.boxTest(cPoints[c])) return true;
+			}
+		return false;	
 		}	
 }
 
@@ -260,35 +277,6 @@ enemyAntenna = function(canvas,start,x,y,h,w,conf) {
 		ctx.fill();
 		ctx.stroke();
 		ctx.lineWidth = 2;
-		//ctx.moveTo(this.X-10,this.Y-5);
-		//ctx.lineTo(this.X-10,this.Y-5);
-		//ctx.lineTo(this.X-15,this.Y-15);
-		//ctx.lineTo(this.X-10,this.Y-20);
-		//ctx.lineTo(this.X-5,this.Y-25);
-		//ctx.lineTo(this.X+5,this.Y-25);
-		//ctx.lineTo(this.X+10,this.Y-20);
-		//ctx.lineTo(this.X+15,this.Y-15);
-		//ctx.lineTo(this.X+10,this.Y-5);
-		//ctx.fill();
-		//ctx.stroke();
-		//ctx.strokeStyle = "rgb(100,155,100)";
-		//ctx.beginPath();
-		//ctx.lineWidth = 4;
-		//ctx.moveTo(this.X-15,this.Y);
-		//ctx.lineTo(this.X-10,this.Y-5);
-		//ctx.lineTo(this.X+10,this.Y-5);
-		//ctx.lineTo(this.X+15,this.Y);
-		//ctx.stroke();
-		
-		//ctx.beginPath();		
-		//ctx.strokeStyle = "rgb(100,125,100)";
-		//ctx.lineWidth = 2;
-		//ctx.moveTo(this.X-3,this.Y-6);
-		//ctx.lineTo(this.X-3,this.Y-20);
-		//ctx.lineTo(this.X+5,this.Y-20);
-		//ctx.moveTo(this.X-3,this.Y-12);
-		//ctx.lineTo(this.X+2,this.Y-12);	
-		//ctx.stroke();
 		}
 	
 	this.explode = function(t) {
@@ -320,7 +308,22 @@ enemyAntenna = function(canvas,start,x,y,h,w,conf) {
 			this.firstExplode = false;	
 			}
 		}
+	
+	this.boxTest = function(points) {
+		if(points[0]>this.X-11 && points[1]>this.Y-30) {
+			if(points[0]<this.X+11 && points[1]<this.Y) {
+				return true;
+				}
+			}
+		return false;
+		}	
 		
+	this.collisionCheck = function(cPoints) { 
+		for(var c=0;c<cPoints.length;c++) {
+			if(this.boxTest(cPoints[c])) return true;
+			}
+		return false;	
+		}	
 	}
 		
 enemyAntenna.prototype = new enemyObj();

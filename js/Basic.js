@@ -1,5 +1,5 @@
 var tick;var sCount;var shootLock;var ctx;var WIDHT; var HEIGHT;
-var pause = true;	var intervalID = 0;	var intervalUpdate = (1000/50);
+var pause = true;	var intervalID = 0;	var intervalUpdate = (1000/60);
 var keys = {left:false,up:false,right:false,down:false,fire:false};
 var collisionObjects = [];var collisionCheckObjects = []; var drawLayer = [[],[],[],[],[],[]]; var starCraft; var bulletObjcts = [];
 var allObj = [];var objByTyp = {mountain:{},ship:{}};
@@ -21,18 +21,13 @@ function init(){
   	ctx.lineCap = "round";		
 	ctx.lineWidth = 2;
 	addObject(new enemyMountain(ctx,HEIGHT+25,WIDTH+201,configMountain));
-//	addObject(new starField(ctx,1,HEIGHT+25,WIDTH+101,configStarField));
+	addObject(new starField(ctx,1,HEIGHT+25,WIDTH+101,configStarField));
 	addObject(new starField(ctx,3,HEIGHT+25,WIDTH+201,configStarField));
-//	addObject(new starField(ctx,4,HEIGHT+25,WIDTH+301,configStarField));
-//	configStarField["layer"] = 4;
-//	addObject(new starField(ctx,6,HEIGHT+25,WIDTH+401,configStarField));
+	addObject(new starField(ctx,4,HEIGHT+25,WIDTH+301,configStarField));
+	configStarField["layer"] = 4;
+	addObject(new starField(ctx,6,HEIGHT+25,WIDTH+401,configStarField));
 	addObject(new spaceCraft(ctx,400,100,configSpaceCraft));
-	//collisionObjects.push(new enemyMountain(ctx,HEIGHT+25,WIDTH+201));
-	//starFieldLayer = new starField(ctx,5,HEIGHT+25,WIDTH+501);
-	//starFieldLayer.init();
-	//myShip = new spaceCraft(ctx,100,100);
 	set_enemyLine();
-	//$("#landscape").html(""+objByTyp.mountain[0].line); 
 	intervalSwitsh();
 }
 
@@ -44,6 +39,11 @@ function addObject(theObj) {
 	allObj.push(theObj);
 	}
 
+function startLoop()
+{
+    requestAnimFrame(startLoop);
+    draw();
+}
 
 function intervalSwitsh() {
 	if(pause) {

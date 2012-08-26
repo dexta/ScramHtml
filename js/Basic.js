@@ -4,7 +4,7 @@ var keys = {left:false,up:false,right:false,down:false,fire:false};
 var collisionObjects = [];var collisionCheckObjects = []; var drawLayer = [[],[],[],[],[],[]]; var starCraft; var bulletObjcts = [];
 var allObj = [];var objByTyp = {mountain:{},ship:{}};
 var chkCol;
-var canvasName = ["canvas","canvas1"]; var canToDraw = 0; var ctxG1; var ctxG2;
+var canvasBuffer; var canvasView;
 var lockDraw = false;
 var fps = 0,tpd=0,now,lastUpdate = (new Date)*1 -1;
 var fpsFilter = 50;
@@ -15,20 +15,21 @@ function init(){
 	tick = 1;
 	sCount = 0;
 	shootLock = 0;
-	ctx = $("#canvas")[0].getContext('2d');
-	ctxG1 = $("#canvas")[0].getContext('2d');
-	ctxG2 = $("#canvas1")[0].getContext('2d');
+	canvasBuffer = document.getElementById('canvas'); //$("#canvas")[0ca];
+	ctx = canvasBuffer.getContext('2d');
+	canvasView = $("#canvas1")[0].getContext('2d');
 	WIDTH = $("#canvas").width();
   	HEIGHT = $("#canvas").height();
   	chkCol = new checkCollision();
   	ctx.lineCap = "round";		
 	ctx.lineWidth = 2;
+	ctx.font = "30px 'optimer'"; 
 	addObject(new enemyMountain(ctx,HEIGHT+25,WIDTH+201,configMountain));
-	addObject(new starField(ctx,1,HEIGHT+25,WIDTH+101,configStarField));
+	//addObject(new starField(ctx,1,HEIGHT+25,WIDTH+101,configStarField));
 	addObject(new starField(ctx,3,HEIGHT+25,WIDTH+201,configStarField));
-	addObject(new starField(ctx,4,HEIGHT+25,WIDTH+301,configStarField));
-	configStarField["layer"] = 4;
-	addObject(new starField(ctx,6,HEIGHT+25,WIDTH+401,configStarField));
+	//addObject(new starField(ctx,4,HEIGHT+25,WIDTH+301,configStarField));
+	//configStarField["layer"] = 4;
+	//addObject(new starField(ctx,6,HEIGHT+25,WIDTH+401,configStarField));
 	addObject(new spaceCraft(ctx,400,100,configSpaceCraft));
 	set_enemyLine();
 	intervalSwitsh();
@@ -46,8 +47,13 @@ function addObject(theObj) {
 function startLoop()
 {
     requestAnimFrame(startLoop);
-    bDraw();
+    if(!pause) bDraw();
 }
+// the good and the bad think, some URL maybe explane
+// http://creativejs.com/2011/09/box2d-javascript-tutorial-series-by-seth-ladd/
+// http://blog.sethladd.com/2011/09/box2d-fps-and-world-step-tests-with.html
+// http://www.senaeh.de/bessere-loops-mit-requestanimationframe/
+// http://www.peter-strohm.de/webgl/webgltutorial4.php
 
 function intervalSwitsh() {
 	if(pause) {
@@ -55,13 +61,13 @@ function intervalSwitsh() {
 		pause = false;
 		} else {
 			clearInterval(intervalID);
-			pause = true;			
+			pause = true;
 			}
 	}
 
 function clearCTX() {
 	ctx.clearRect(0,0,WIDTH,HEIGHT);		
-	ctx.fillStyle = "rgb(0,0,0)";
+	ctx.fillStyle = "rgba(0,0,0,0)";
 	ctx.beginPath();
 	ctx.fillRect(0,0,WIDTH+201,HEIGHT+25);
 	ctx.stroke();
@@ -109,7 +115,7 @@ function enemyObjAdd(types,x,y) {
 			addObject(new enemyFuel(ctx,tick,(x+20)+(t*30),y,HEIGHT,WIDHT,configFuel));
 			}
 		if(types[t] == 3) {
-			addObject(new enemyAntenna(ctx,tick,(x+20)+(t*30),y,HEIGHT,WIDHT,configFuel));
+			addObject(new enemyAntenna(ctx,tick,(x+20)+(t*30),y,HEIGHT,WIDHT,configAntenna));
 			}
 		}
 	}

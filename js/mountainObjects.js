@@ -3,7 +3,7 @@ enemyMountain = function(ctx,h,w,conf) {
 	this.height = h;
 	this.wight = w;
 	this.mvWight = 100;
-	this.mvHeight = 50;
+	this.mvHeight = 30;
 	this.sectorLength = Math.floor(w/this.mvWight)+2;
 	this.canvas = ctx;
 	this.line = [2,2,3,3,3,2,4,5,5,6,6,5,5,5,3,3,3,2,2,3,4,4,5,5,6,6,3,2,2,6,6,2,2,3,3,2,2,2,2,1];
@@ -14,7 +14,7 @@ enemyMountain = function(ctx,h,w,conf) {
 	this.draw = function(t) {
 		this.canvas.fillStyle = this.colorFill;
 		this.canvas.strokeStyle = this.colorLines;
-		//this.canvas.lineWidth = 4;
+		this.canvas.lineWidth = 4;
 		this.canvas.beginPath();
 		this.canvas.moveTo(-200,this.lineToHeight(0));
 		for(mP=0;mP<this.sectorLength;mP++) {
@@ -78,7 +78,7 @@ enemyMountain = function(ctx,h,w,conf) {
 		}
 	
 		
-	this.collisionCheck = function(cPoints) {
+	this.collisionCheck = function(cPoints,typeOf) {
 		for(var c=0;c<cPoints.length;c++) {
 			var sP = Math.floor(cPoints[c][0]/this.mvWight);
 			var cx = cPoints[c][0]; cy = cPoints[c][1];

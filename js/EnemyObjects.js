@@ -7,21 +7,18 @@ enemyObj = function(ctx,start,x,y,h,w,conf) {
 	this.height = h;
 	this.width = w;
 	// some defaults
-	this.scorePoints = 100;
 	this.ePoints = [];
 	this.firstExplode = true;
-	this.explodeLength = 42;
 	this.explodeCount = 0;
 	this.explodeStart = false;
 	this.explodeEnd = false;
 	this.nextSector = function() {
-		if(!this.explodeStart) {
-			this.X -= 100;
-		}else{ 
-			for(var a=0;a<this.ePoints.length;a++) {
-				this.ePoints[a].x0 -= 100;
-				}
+		this.X -= 100;
+		if(this.explodeStart) {
+		for(var a=0;a<this.ePoints.length;a++) {
+			this.ePoints[a].x0 -= 100;
 			}
+		}
 		if(this.X < -100 || this.X > this.width*1.5 || this.Y < -50 || this.Y > this.height*1.5) this.explodeEnd = true;
 	}
 	this.collision = function() {
@@ -30,6 +27,44 @@ enemyObj = function(ctx,start,x,y,h,w,conf) {
 	this.collisionCheck = function(cPoints) { 
 		return false;
 		}
+		
+	this.explodeInit = function(t,eNo,r,rnd,step) {
+		var rad = 2*Math.PI/eNo; //10 elements
+			var radius = r;
+			var rStart = Math.floor(Math.random()*65536)%rnd;
+			for(var a=17+rStart;a<29+rStart;a+=step) {
+				var x = this.X+radius*Math.cos(rad*a);
+				var y = this.Y+radius*Math.sin(rad*a);
+				var xx = this.X+.1*Math.cos(rad*a);
+				var yy = this.Y+.1*Math.sin(rad*a);
+				this.ePoints.push(new ballistic(x,y,x-xx,y-yy,t));
+				}
+		this.firstExplode = false;	
+		}
+	
+	this.explodeDraw = function(t) {
+		if(this.explodeCount>this.explodeLength) { this.explodeEnd = true; return; }
+		this.canvas.fillStyle = "rgb(255,150,150)";
+		this.canvas.strokeStyle = "rgb(250,150,150)";
+		for(var a=0;a<this.ePoints.length;a++) {
+			this.ePoints[a].update(t);
+			this.canvas.beginPath();
+			this.canvas.moveTo(this.ePoints[a].x0+(-1*this.ePoints[a].vx0),this.ePoints[a].y0+(-1*this.ePoints[a].vy0));
+			this.canvas.lineTo(this.ePoints[a].x0,this.ePoints[a].y0);
+			this.canvas.fill();
+			this.canvas.stroke();
+			//console.log("expl. point"+a+" kord "+this.ePoints[a].x0+" - "+this.ePoints[a].y0);
+			}
+		this.drawPoints();
+		this.explodeCount++;
+		}
+	
+	this.drawPoints = function() {
+		// move to global 
+		this.canvas.font = ((30-(this.explodeCount/2)))+"px 'optimer'"; 
+		this.canvas.strokeStyle = "rgb(250,250,50)";
+		this.canvas.strokeText(''+this.scorePoints, this.X, this.Y);
+		}
 }
 
 
@@ -37,9 +72,8 @@ enemyMissile = function(ctx,start,x,y,h,w,conf) {
 	this.constructor(ctx,start,x,y,h,w,conf);
 	this.onFly = false;
 	
-	
 	this.update = function(t) {
-		//this.X -= 1;
+		if(this.onFly) this.Y -= 1;
 		return [this.X,this.Y];
 		}
 	
@@ -47,17 +81,6 @@ enemyMissile = function(ctx,start,x,y,h,w,conf) {
 		if(!this.explodeStart) { this.cast(); }else{ this.explode(t);}
 		}
 	
-	this.collision = function() {
-		return "over written";
-		}
-	this.getPolygon = function() {
-		var poly = [];
-		var tTri = [];var x3,y3;
-		poly.push([[this.X-7,this.Y],[this.X,this.Y-30],[this.X,this.Y]]);
-		poly.push([[this.X,this.Y-30],[this.X+7,this.Y],[this.X,this.Y]]);
-		return poly;
-		}
-		
 	this.cast = function() {
 		this.canvas.fillStyle = "rgb(200,190,190)";
 		this.canvas.strokeStyle = "rgb(20,190,190)";
@@ -73,35 +96,14 @@ enemyMissile = function(ctx,start,x,y,h,w,conf) {
 	
 	this.explode = function(t) {
 		if(!this.firstExplode) {
-			if(this.explodeCount>this.explodeLength) { this.explodeEnd = true; return; }
-			this.canvas.fillStyle = "rgb(255,150,150)";
-			this.canvas.strokeStyle = "rgb(250,150,150)";
-			for(var a=0;a<this.ePoints.length;a++) {
-				this.ePoints[a].update(t);
-				this.canvas.beginPath();
-				this.canvas.moveTo(this.ePoints[a].x0+(-1*this.ePoints[a].vx0),this.ePoints[a].y0+(-1*this.ePoints[a].vy0));
-				this.canvas.lineTo(this.ePoints[a].x0,this.ePoints[a].y0);
-				this.canvas.fill();
-				this.canvas.stroke();
-				//console.log("expl. point"+a+" kord "+this.ePoints[a].x0+" - "+this.ePoints[a].y0);
-				}
-			this.explodeCount++;
+			this.explodeDraw(t);
 			} else {
-			var rad = 2*Math.PI/36; //10 elements
-			var radius = 2;
-			var rStart = Math.floor(Math.random()*65536)%7;
-			for(var a=17+rStart;a<29+rStart;a+=3) {
-				var x = this.X+radius*Math.cos(rad*a);
-				var y = this.Y+radius*Math.sin(rad*a);
-				var xx = this.X+.1*Math.cos(rad*a);
-				var yy = this.Y+.1*Math.sin(rad*a);
-				this.ePoints.push(new ballistic(x,y,x-xx,y-yy,t));
-				}
-			this.firstExplode = false;	
+			this.explodeInit(t,36,2,7,3); // time, elements, radius, random +/-,steps between elements
 			}
 		}
 		
-	this.boxTest = function(points) {
+	this.boxTest = function(points,typOf) {
+		if(typOf == "ship" && points[0]>this.X-100) this.onFly = true;
 		if(points[0]>this.X-7 && points[1]>this.Y-30) {
 			if(points[0]<this.X+7 && points[1]<this.Y) {
 				return true;
@@ -110,10 +112,9 @@ enemyMissile = function(ctx,start,x,y,h,w,conf) {
 		return false;
 		}	
 		
-	this.collisionCheck = function(cPoints) { 
-		
+	this.collisionCheck = function(cPoints,typOf) { 
 		for(var c=0;c<cPoints.length;c++) {
-			if(this.boxTest(cPoints[c])) return true;
+			if(this.boxTest(cPoints[c],typOf)) return true;
 			}
 		return false;	
 		}
@@ -181,31 +182,9 @@ enemyFuel = function(ctx,start,x,y,h,w,conf) {
 	
 	this.explode = function(t) {
 		if(!this.firstExplode) {
-			if(this.explodeCount>this.explodeLength) { this.explodeEnd = true; return; }
-			this.canvas.fillStyle = "rgb(255,150,150)";
-			this.canvas.strokeStyle = "rgb(250,150,150)";
-			for(var a=0;a<this.ePoints.length;a++) {
-				this.ePoints[a].update(t);
-				this.canvas.beginPath();
-				this.canvas.moveTo(this.ePoints[a].x0+(-1*this.ePoints[a].vx0),this.ePoints[a].y0+(-1*this.ePoints[a].vy0));
-				this.canvas.lineTo(this.ePoints[a].x0,this.ePoints[a].y0);
-				this.canvas.fill();
-				this.canvas.stroke();
-				//console.log("expl. point"+a+" kord "+this.ePoints[a].x0+" - "+this.ePoints[a].y0);
-				}
-			this.explodeCount++;
+			this.explodeDraw(t);
 			} else {
-			var rad = 2*Math.PI/36; //10 elements
-			var radius = 2;
-			var rStart = Math.floor(Math.random()*65536)%7;
-			for(var a=17+rStart;a<29+rStart;a+=3) {
-				var x = this.X+radius*Math.cos(rad*a);
-				var y = this.Y+radius*Math.sin(rad*a);
-				var xx = this.X+.1*Math.cos(rad*a);
-				var yy = this.Y+.1*Math.sin(rad*a);
-				this.ePoints.push(new ballistic(x,y,x-xx,y-yy,t));
-				}
-			this.firstExplode = false;	
+			this.explodeInit(t,36,4,4,2); // time, elements, radius, random +/-,steps between elements
 			}
 		}
 	
@@ -218,7 +197,7 @@ enemyFuel = function(ctx,start,x,y,h,w,conf) {
 		return false;
 		}	
 		
-	this.collisionCheck = function(cPoints) { 
+	this.collisionCheck = function(cPoints,typeOf) { 
 		
 		for(var c=0;c<cPoints.length;c++) {
 			if(this.boxTest(cPoints[c])) return true;
@@ -279,33 +258,11 @@ enemyAntenna = function(ctx,start,x,y,h,w,conf) {
 		this.canvas.lineWidth = 2;
 		}
 	
-	this.explode = function(t) {
+		this.explode = function(t) {
 		if(!this.firstExplode) {
-			if(this.explodeCount>this.explodeLength) { this.explodeEnd = true; return; }
-			this.canvas.fillStyle = "rgb(255,150,150)";
-			this.canvas.strokeStyle = "rgb(250,150,150)";
-			for(var a=0;a<this.ePoints.length;a++) {
-				this.ePoints[a].update(t);
-				this.canvas.beginPath();
-				this.canvas.moveTo(this.ePoints[a].x0+(-1*this.ePoints[a].vx0),this.ePoints[a].y0+(-1*this.ePoints[a].vy0));
-				this.canvas.lineTo(this.ePoints[a].x0,this.ePoints[a].y0);
-				this.canvas.fill();
-				this.canvas.stroke();
-				//console.log("expl. point"+a+" kord "+this.ePoints[a].x0+" - "+this.ePoints[a].y0);
-				}
-			this.explodeCount++;
+			this.explodeDraw(t);
 			} else {
-			var rad = 2*Math.PI/36; //10 elements
-			var radius = 2;
-			var rStart = Math.floor(Math.random()*65536)%7;
-			for(var a=17+rStart;a<29+rStart;a+=3) {
-				var x = this.X+radius*Math.cos(rad*a);
-				var y = this.Y+radius*Math.sin(rad*a);
-				var xx = this.X+.1*Math.cos(rad*a);
-				var yy = this.Y+.1*Math.sin(rad*a);
-				this.ePoints.push(new ballistic(x,y,x-xx,y-yy,t));
-				}
-			this.firstExplode = false;	
+			this.explodeInit(t,42,1,9,4); // time, elements, radius, random +/-,steps between elements
 			}
 		}
 	
@@ -318,7 +275,7 @@ enemyAntenna = function(ctx,start,x,y,h,w,conf) {
 		return false;
 		}	
 		
-	this.collisionCheck = function(cPoints) { 
+	this.collisionCheck = function(cPoints,typeOf) { 
 		for(var c=0;c<cPoints.length;c++) {
 			if(this.boxTest(cPoints[c])) return true;
 			}

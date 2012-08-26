@@ -4,25 +4,29 @@
 configMountain = {
 	objTyp: "mountain",
 	collisionTyp: "get",
-	layer: 1
+	layer: 1,
+	lastTick: 0
 }
 
 configStarField = {
 	objTyp: "starfield",
 	collisionTyp: "none",
-	layer: 0
+	layer: 0,
+	lastTick: 0
 }
 
 configSpaceCraft = {
 	objTyp: "ship",
 	collisionTyp: "check",
-	layer: 3
+	layer: 3,
+	lastTick: 0
 }
 
 configBullets = {
 	objTyp: "bullet",
 	collisionTyp: "check",
 	layer: 2,
+	lastTick: 0,
 	firstExplode: true,
 	explodeLength: 42,
 	explodeCount: 0,
@@ -34,10 +38,11 @@ configEnemy = {
 	objTyp: "enemy",
 	collisionTyp: "get",
 	layer: 2,
-	scorePoints:100,
+	lastTick: 0,	
+	scorePoints:150,
 	ePoints: [],
 	firstExplode: true,
-	explodeLength: 64,
+	explodeLength: 42,
 	explodeCount: 0,
 	explodeStart: false,
 	explodeEnd: false
@@ -47,7 +52,8 @@ configFuel = {
 	objTyp: "enemy",
 	collisionTyp: "get",	
 	layer: 2,
-	scorePoints:100,
+	lastTick: 0,
+	scorePoints:50,
 	fuelPoints:1,
 	ePoints: [],
 	firstExplode: true,
@@ -57,6 +63,20 @@ configFuel = {
 	explodeEnd: false
 }
 
+configAntenna = {
+	objTyp: "enemy",
+	collisionTyp: "get",	
+	layer: 2,
+	lastTick: 0,
+	scorePoints:75,
+	fuelPoints:1,
+	ePoints: [],
+	firstExplode: true,
+	explodeLength: 23,
+	explodeCount: 0,
+	explodeStart: false,
+	explodeEnd: false
+}
 
 window.requestAnimFrame = (function()
 {

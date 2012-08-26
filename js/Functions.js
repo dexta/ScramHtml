@@ -5,7 +5,6 @@ function draw() {
 	thisFrame = 1000 / (now-lastUpdate);
 	fps += (thisFrame - fps) / fpsFilter;
 	lastUpdate = now;
-	//clearCTX();
 	drawLayer = [[],[],[],[],[],[]];
 	collisionCheckObjects = [];
 	collisionObjects = [];
@@ -36,7 +35,7 @@ function draw() {
 
 	for(var cco=0;cco<collisionCheckObjects.length;cco++) {
 		for(var co=0;co<collisionObjects.length;co++) {
-			if(collisionObjects[co].collisionCheck(collisionCheckObjects[cco].collision())) {
+			if(collisionObjects[co].collisionCheck(collisionCheckObjects[cco].collision(),collisionCheckObjects[cco].objTyp)) {
 				collisionCheckObjects[cco].explodeStart = true;
 				if(collisionObjects[co].objTyp == "enemy") collisionObjects[co].explodeStart = true;
 				}
@@ -51,6 +50,7 @@ function draw() {
 		//ctxG1.translate(100,0);
 		//ctxG2.translate(100,0);
 		ctx.translate(100,0);
+		
 		for(var a=0;a<allObj.length;a++) {
 				allObj[a].nextSector();		
 			}
@@ -67,6 +67,7 @@ function draw() {
 
 function bDraw() {
 	if(lockDraw) return;
+	lockDraw = true;
 	clearCTX();
 	for(var a=0;a<drawLayer.length;a++) {
 		if(drawLayer[a].length == 0) continue;
@@ -74,4 +75,7 @@ function bDraw() {
 			drawLayer[a][ai].draw(tick);
 			}
 		}
+	lockDraw = false;
+	canvasView.clearRect(0,0,WIDTH,HEIGHT);
+	canvasView.drawImage(canvasBuffer,0,0,WIDTH,HEIGHT);
 	}

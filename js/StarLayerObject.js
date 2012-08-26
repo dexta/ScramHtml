@@ -15,6 +15,12 @@ starField = function(ctx,layer,h,w,conf) {
 		}
 		
 	this.update = function(time) {
+		var diff = time - this.lastTick;
+		for(lp=0;lp<this.fieldSet.length;lp++) {
+			if(this.fieldSet[lp][0]<-5) this.fieldSet[lp][0] += this.width;
+			this.fieldSet[lp][0] -= (this.layerSpeed*diff);
+			}
+		this.lastTick = time;
 		return time; //just a dummy return function 
 		}
 	
@@ -22,8 +28,8 @@ starField = function(ctx,layer,h,w,conf) {
 		grey = (this.layerSpeed*50)+5;
 		this.canvas.strokeStyle = "rgb("+grey+","+grey+","+grey+")";
 		for(lp=0;lp<this.fieldSet.length;lp++) {
-			if(this.fieldSet[lp][0]<-5) this.fieldSet[lp][0] += this.width;
-			this.fieldSet[lp][0] -= this.layerSpeed;
+			//if(this.fieldSet[lp][0]<-5) this.fieldSet[lp][0] += this.width;
+			//this.fieldSet[lp][0] -= this.layerSpeed;
 			if(this.fieldSet[lp][0]>this.width+50) continue;
 			this.canvas.beginPath();
 			this.canvas.moveTo(this.fieldSet[lp][0],this.fieldSet[lp][1]);

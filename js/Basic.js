@@ -26,7 +26,7 @@ function init(){
 	ctx.font = "30px 'optimer'"; 
 	addObject(new enemyMountain(ctx,HEIGHT+25,WIDTH+201,configMountain));
 	//addObject(new starField(ctx,1,HEIGHT+25,WIDTH+101,configStarField));
-	addObject(new starField(ctx,3,HEIGHT+25,WIDTH+201,configStarField));
+	//addObject(new starField(ctx,3,HEIGHT+25,WIDTH+201,configStarField));
 	//addObject(new starField(ctx,4,HEIGHT+25,WIDTH+301,configStarField));
 	//configStarField["layer"] = 4;
 	//addObject(new starField(ctx,6,HEIGHT+25,WIDTH+401,configStarField));
@@ -47,7 +47,7 @@ function addObject(theObj) {
 function startLoop()
 {
     requestAnimFrame(startLoop);
-    if(!pause) bDraw();
+    if(!pause) { bDraw(); }
 }
 // the good and the bad think, some URL maybe explane
 // http://creativejs.com/2011/09/box2d-javascript-tutorial-series-by-seth-ladd/
@@ -134,7 +134,7 @@ function add_enemy(sector) {
 	if(objByTyp.mountain.line[s] != objByTyp.mountain.line[e]) return;
 	var enemyTypes = get_rnd_enemy();
 	var mW = objByTyp.mountain.mvWight;
-	var mH = objByTyp.mountain.mvHeight;
+	//var mH = objByTyp.mountain.mvHeight;
 	var cornerX = mW*s;
 	var cornerY = objByTyp.mountain.lineToHeight(s);
 	//console.log("sector "+s+" cX "+cornerX+" cY "+cornerY+" enemys "+enemyTypes);

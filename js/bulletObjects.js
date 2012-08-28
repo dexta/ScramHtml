@@ -28,8 +28,9 @@ friendMissile = function(ctx,start,x,y,conf) {
 	this.explodeEnd = false;
 	this.balli = new ballistic(x,y,0,0,start);
 	this.update = function(t) {
-		this.X += 1;
+		//this.X -= 1;
 		this.Y += 2;
+		if(this.X < -100 || this.X > 1500 || this.Y < -50 || this.Y > 500) this.explodeEnd = true;
 		return [this.X,this.Y];
 		}
 	this.collision = function() {
@@ -50,6 +51,7 @@ friendMissile = function(ctx,start,x,y,conf) {
 	this.cast = function() {
 		this.canvas.fillStyle = "rgb(255,0,0)";
 		this.canvas.strokeStyle = "rgb(250,0,0)";
+		this.canvas.lineWidth = 2;
 		this.canvas.beginPath();
 		this.canvas.moveTo(this.X,this.Y);
 		this.canvas.lineTo(this.X,this.Y-9)
@@ -102,6 +104,8 @@ friendLaser = function(ctx,start,x,y,conf) {
 	this.update = function(t) {
 		
 			this.X += 3;
+			//if(this.X < -100 || this.X > this.width*1.5 || this.Y < -50 || this.Y > this.height*1.5) this.explodeEnd = true;
+			if(this.X < -100 || this.X > 1500 || this.Y < -50 || this.Y > 500) this.explodeEnd = true;
 			return [this.X,this.Y];
 		
 		}
@@ -124,6 +128,7 @@ friendLaser = function(ctx,start,x,y,conf) {
 		if(this.X>2000) this.explodeEnd = true;
 		this.canvas.fillStyle = "rgb(255,255,0)";
 		this.canvas.strokeStyle = "rgb(250,10,0)";
+		this.canvas.lineWidth = 2;
 		this.canvas.beginPath();
 		this.canvas.moveTo(this.X,this.Y);
 		this.canvas.lineTo(this.X-15,this.Y+1)

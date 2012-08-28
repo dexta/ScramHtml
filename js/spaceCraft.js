@@ -22,6 +22,7 @@ spaceCraft = function(ctx,x,y,conf) {
 		}
 		
 	this.update = function(time) {
+		this.X -= 1;
 		return time; //just a dummy return function 
 		}
 
@@ -30,6 +31,7 @@ spaceCraft = function(ctx,x,y,conf) {
 		//this.movement(keys);
 		this.canvas.fillStyle = "rgb(100,100,200)";
 		this.canvas.strokeStyle = "rgb(250,250,250)";
+		this.canvas.lineWidth = 3;
 		this.canvas.beginPath();
 		this.canvas.moveTo(this.X,this.Y);
 		this.canvas.lineTo(this.X-30,this.Y-10);
@@ -37,6 +39,7 @@ spaceCraft = function(ctx,x,y,conf) {
 		this.canvas.lineTo(this.X,this.Y);
 		this.canvas.stroke();
 		this.canvas.fill();
+		this.canvas.lineWidth = 2;
 		}
 		
 	this.nextSector = function() {

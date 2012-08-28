@@ -8,17 +8,13 @@ function draw() {
 	drawLayer = [[],[],[],[],[],[]];
 	collisionCheckObjects = [];
 	collisionObjects = [];
-	
-	//canToDraw = (canToDraw == 0)? 1:0;
-	//ctx = $("#"+canvasName[canToDraw])[0].getContext('2d');
-	
+	if(tick%100 == 0) { 	add_enemy(objByTyp.mountain.sectorLength); 		$("#landscape").html(""+objByTyp.mountain.line); }
 	for(var a=0;a<allObj.length;a++) {
 		allObj[a].update(tick);
 		drawLayer[allObj[a].layer].push(allObj[a]);
 		if(allObj[a].explodeEnd || false) { allObj.splice(a,1); continue; }
 		if(allObj[a].objTyp == "ship") { 
 			allObj[a].movement(keys)
-			//console.log("fire "+allObj[a].getFire());
 			if(allObj[a].getFire()) { 
 				addObject(new friendLaser(ctx,tick,allObj[a].X,allObj[a].Y,configBullets));
 				addObject(new friendMissile(ctx,tick,allObj[a].X-5,allObj[a].Y+5,configBullets));
@@ -34,6 +30,7 @@ function draw() {
 		}
 
 	for(var cco=0;cco<collisionCheckObjects.length;cco++) {
+		//if(collisionCheckObjects[cco].objTyp == "ship") continue;
 		for(var co=0;co<collisionObjects.length;co++) {
 			if(collisionObjects[co].collisionCheck(collisionCheckObjects[cco].collision(),collisionCheckObjects[cco].objTyp)) {
 				collisionCheckObjects[cco].explodeStart = true;
@@ -42,20 +39,16 @@ function draw() {
 			} // end collisionObjects
 		} // end collisionCheckObjects
 
-	//ctx.translate(-1,0);
 	tick++;
 	
 	if(tick%100 == 0) {
 		//console.log("switsch "+tick);
-		//ctxG1.translate(100,0);
-		//ctxG2.translate(100,0);
-		ctx.translate(100,0);
 		
-		for(var a=0;a<allObj.length;a++) {
-				allObj[a].nextSector();		
-			}
-		//$("#landscape").html(""+objByTyp.mountain[0].line);
-		add_enemy(objByTyp.mountain.sectorLength);
+		//for(var a=0;a<allObj.length;a++) {
+				//allObj[a].nextSector();		
+		//	}
+
+		//add_enemy(objByTyp.mountain.sectorLength);
 		}
 	
 	lockDraw = false;		
@@ -75,7 +68,8 @@ function bDraw() {
 			drawLayer[a][ai].draw(tick);
 			}
 		}
-	lockDraw = false;
+	
 	canvasView.clearRect(0,0,WIDTH,HEIGHT);
 	canvasView.drawImage(canvasBuffer,0,0,WIDTH,HEIGHT);
+	lockDraw = false;
 	}

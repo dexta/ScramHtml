@@ -19,7 +19,7 @@ enemyObj = function(ctx,start,x,y,h,w,conf) {
 			this.ePoints[a].x0 -= 100;
 			}
 		}
-		if(this.X < -100 || this.X > this.width*1.5 || this.Y < -50 || this.Y > this.height*1.5) this.explodeEnd = true;
+		
 	}
 	this.collision = function() {
 		return [[this.X,this.Y]];
@@ -59,6 +59,12 @@ enemyObj = function(ctx,start,x,y,h,w,conf) {
 		this.explodeCount++;
 		}
 	
+	this.update = function(t) {
+		this.X -= 1;
+		if(this.X < -100 || this.X > this.width*1.5 || this.Y < -50 || this.Y > this.height*1.5) this.explodeEnd = true;
+		return [this.X,this.Y];
+		}
+	
 	this.drawPoints = function() {
 		// move to global 
 		this.canvas.font = ((30-(this.explodeCount/2)))+"px 'optimer'"; 
@@ -74,6 +80,8 @@ enemyMissile = function(ctx,start,x,y,h,w,conf) {
 	
 	this.update = function(t) {
 		if(this.onFly) this.Y -= 1;
+		this.X -= 1;
+		if(this.X < -50 || this.X > this.width*1.2 || this.Y < -50 || this.Y > this.height*1.2) this.explodeEnd = true;
 		return [this.X,this.Y];
 		}
 	
@@ -84,6 +92,7 @@ enemyMissile = function(ctx,start,x,y,h,w,conf) {
 	this.cast = function() {
 		this.canvas.fillStyle = "rgb(200,190,190)";
 		this.canvas.strokeStyle = "rgb(20,190,190)";
+		this.canvas.lineWidth = 2;
 		this.canvas.beginPath();
 		this.canvas.moveTo(this.X,this.Y-30);
 		this.canvas.lineTo(this.X-7,this.Y-1)
@@ -125,10 +134,6 @@ enemyMissile.prototype = new enemyObj();
 
 enemyFuel = function(ctx,start,x,y,h,w,conf) {
 	this.constructor(ctx,start,x,y,h,w,conf);
-	this.update = function(t) {
-		//this.X -= 1;
-		return [this.X,this.Y];
-		}
 	
 	this.draw = function(t) {
 		if(!this.explodeStart) { this.cast(); }else{ this.explode(t);}
@@ -148,6 +153,7 @@ enemyFuel = function(ctx,start,x,y,h,w,conf) {
 	this.cast = function() {
 		this.canvas.fillStyle = "rgb(100,155,100)";
 		this.canvas.strokeStyle = "rgb(10,125,10)";
+		this.canvas.lineWidth = 2;
 		this.canvas.beginPath();
 		this.canvas.moveTo(this.X-10,this.Y-5);
 		this.canvas.lineTo(this.X-10,this.Y-5);
@@ -211,10 +217,6 @@ enemyFuel.prototype = new enemyObj();
 
 enemyAntenna = function(ctx,start,x,y,h,w,conf) {
 	this.constructor(ctx,start,x,y,h,w,conf);
-	this.update = function(t) {
-		//this.X -= 1;
-		return [this.X,this.Y];
-		}
 	
 	this.draw = function(t) {
 		if(!this.explodeStart) { this.cast(); }else{ this.explode(t);}

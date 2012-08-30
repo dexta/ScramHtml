@@ -1,39 +1,51 @@
-var tick;var sCount;var shootLock;var ctx;var WIDHT; var HEIGHT;
-var pause = true;	var intervalID = 0;	var intervalUpdate = (1000/65);
-var keys = {left:false,up:false,right:false,down:false,fire:false};
+var ctx;var WIDHT; var HEIGHT;var canvasBuffer; var canvasView; var canvasMenu;
+var tick;var scoreCount;var enemyToScore; var fuelScore; var levelCount; var levelNo; var missEnemy;
+var pause = true;	var intervalID = 0;	var hudRefreashID; var intervalUpdate = (1000/60);
+var keys = {left:false,up:false,right:false,down:false,fire:false}; var autoFire;
 var collisionObjects = [];var collisionCheckObjects = []; var drawLayer = [[],[],[],[],[],[]]; var starCraft; var bulletObjcts = [];
 var allObj = [];var objByTyp = {mountain:{},ship:{}};
-var chkCol;
-var canvasBuffer; var canvasView;
+var chkCol; var firstStart = true;
+
 var lockDraw = false;
 var fps = 0,tpd=0,now,lastUpdate = (new Date)*1 -1;
 var fpsFilter = 50;
 
-var DEBUG;
 
+
+var DEBUG;
+startLoop();			// find a better way to handle the animationrequest
 function init(){  
 	tick = 1;
-	sCount = 0;
+	scoreCount = 0;
+	enemyToScore  = [];
 	shootLock = 0;
+	fuelScore = 3000;
+	levelCount = 0;
+	levelNo = 1;
+	missEnemy = 0;
+	allObj = [];
 	canvasBuffer = document.getElementById('canvas'); //$("#canvas")[0ca];
 	ctx = canvasBuffer.getContext('2d');
 	canvasView = $("#canvas1")[0].getContext('2d');
+	canvasMenu = $("#IntroOutro")[0].getContext('2d');
 	WIDTH = $("#canvas").width();
   	HEIGHT = $("#canvas").height();
-  	chkCol = new checkCollision();
+  	//chkCol = new checkCollision();
   	ctx.lineCap = "round";		
 	ctx.lineWidth = 2;
 	ctx.font = "30px 'optimer'"; 
 	addObject(new enemyMountain(ctx,HEIGHT+25,WIDTH+201,configMountain));
 	//addObject(new starField(ctx,1,HEIGHT+25,WIDTH+101,configStarField));
 	//addObject(new starField(ctx,3,HEIGHT+25,WIDTH+201,configStarField));
-	//addObject(new starField(ctx,4,HEIGHT+25,WIDTH+301,configStarField));
+	addObject(new starField(ctx,4,HEIGHT+25,WIDTH+301,configStarField));
 	//configStarField["layer"] = 4;
 	//addObject(new starField(ctx,6,HEIGHT+25,WIDTH+401,configStarField));
 	addObject(new spaceCraft(ctx,400,100,configSpaceCraft));
 	set_enemyLine();
 	intervalSwitsh();
-	startLoop();
+
+
+	//startLoop();
 }
 
 function addObject(theObj) {
@@ -58,9 +70,11 @@ function startLoop()
 function intervalSwitsh() {
 	if(pause) {
 		intervalID = setInterval(draw,intervalUpdate);
+		hudRefreashID = setInterval(hudDraw,intervalUpdate*3);
 		pause = false;
 		} else {
 			clearInterval(intervalID);
+			clearInterval(hudRefreashID);
 			pause = true;
 			}
 	}
@@ -92,6 +106,7 @@ $(document).keydown(function(e){
 	if(kc == 39) keys["right"] = true;
 	if(kc == 40) keys["down"] = true;
 	if(kc == 88) keys["fire"] = true;
+	if(kc == 65) keys["autoFire"] = true;
 	});
 
 $(document).keyup(function (e) {
@@ -101,6 +116,7 @@ $(document).keyup(function (e) {
 	if(kc == 39) keys["right"] = false;
 	if(kc == 40) keys["down"] = false;
 	if(kc == 88) keys["fire"] = false;
+	if(kc == 65) keys["autoFire"] = false;
 	});
 
 function enemyObjAdd(types,x,y) {

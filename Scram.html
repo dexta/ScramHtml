@@ -13,6 +13,7 @@
 <script language="JavaScript" src="js/bulletObjects.js"></script>
 <script language="JavaScript" src="js/EnemyObjects.js"></script>
 <script language="JavaScript" src="js/Functions.js"></script>
+<script language="JavaScript" src="js/textObjectAnim.js"></script>
 <script type="application/x-javascript">
 	$(document).ready(function() {
 		$('#debug').click( function () {
@@ -23,7 +24,22 @@
 			intervalSwitsh();
 			})
 			// *** start the canvas !!!!
-			init();	
+			init();
+		$("#initA").click(function() {
+			alert("init all");
+			if(!pause) intervalSwitsh();
+			init();
+			});
+		$("#startText").click(function() {
+			//alert("Intro Text");
+			textIntro();
+			});	
+		$("#gameOver").click(function() {
+			alert("Game Over !!!");
+			});
+		$("#hiscore").click(function() {
+			alert("hiSCORE");
+			});					
 		});
 </script>
 <title>ScramHTML a Scramble Remake line drawing Canvas Art</title>
@@ -39,6 +55,12 @@
 	<div class="grid_10 game" id="layerContainer">
 		<canvas id="canvas" width="900" height="350"></canvas>
 		<canvas id="canvas1" width="900" height="350"></canvas>
+		<canvas id="IntroOutro" width="900" height="350"></canvas>
+		<div id="enterName" class="center">
+			enter your name:<br /><br />
+			<input type="text" size="42" id="player1Name" /><br /><br />
+			<span id="enterPlayer1Name" class="button">Go</span>
+		</div>
 	</div>
 	<div class="clear"></div>
 	<div class="grid_2 info center"><h5 id="pause">				(this).pause		</h5></div>
@@ -46,8 +68,14 @@
 	
 	<div class="grid_2 fps prefix_1">FPS:<span id="fps">	0					</span>	</div>
 	<div class="grid_2 fps prefix_1">ms :<span id="tpd">	0					</span>	</div>
-	<div class="clear"></div>
 
+	<div class="clear"></div>
+	<div class="grid_2 center"><h5 id="initA">				(this).init		</h5></div>
+	<div class="grid_2 center"><h5 id="startText">					Intro on/off		</h5></div>
+	<div class="grid_2 center"><h5 id="gameOver">				Game Over		</h5></div>
+	<div class="grid_2 center"><h5 id="hiscore">					HiScore		</h5></div>
+	
+	<div class="clear"></div>
 	<div class="grid_3 tick debug right">landscape:	</div>
 	<div class="grid_7 tick debug" id="landscape">	</div>
 	<div class="clear"></div>

@@ -35,23 +35,41 @@ h1, h5{
 	display: none;
 }
 
-#layerContainer {
+.button {
+	padding: 3px;
+	border: 1px solid white;
+	cursor:pointer;cursor:hand;
+}
 
+
+#layerContainer {
     width: 900px;
     height: 350px;
 }
 
 #canvas,
-#canvas1 {
+#canvas1,
+#IntroOutro,
+#enterName {
 	width: 100%;
     height: 100%;
-    position: relative;
+    position: absolute;
     top: 0;
     left: 0;
-    z-index: 99;
+    z-index: 23;
 }
 
-#canvas {
+#canvas,
+#enterName {
 	display: none;
 	z-index: 1;
+}
+
+#IntroOutro {
+	z-index: 42;
+}
+
+#enterName {
+	background: RGBA(42,42,42,.8);
+	padding-top: 100px;
 }

@@ -71,6 +71,15 @@ enemyObj = function(ctx,start,x,y,h,w,conf) {
 		this.canvas.strokeStyle = "rgb(250,250,50)";
 		this.canvas.strokeText(''+this.scorePoints, this.X, this.Y);
 		}
+		
+	this.hasCollision = function() {
+		this.hitPoints--;
+		if(this.hitPoints == 0) {
+			this.explodeStart = true;
+			return [["score",this.scorePoints],["fuel",this.fuelPoints]];
+			}
+		return false;
+		}
 }
 
 

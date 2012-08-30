@@ -3,22 +3,19 @@ enemyMountain = function(ctx,h,w,conf) {
 	this.height = h;
 	this.wight = w;
 	this.mvWight = 100;
-	this.mvHeight = 30;
+	this.mvHeight = 20;
 	this.sectorLength = Math.floor(w/this.mvWight)+3;
 	this.canvas = ctx;
-	this.line = [2,2,3,3,3,2,4,5,5,6,6,5,5,5,3,3,3,2,2,3,4,4,5,5,6,6,3,2,2,6,6,2,2,3,3,2,2,2,2,1];
+	this.line = [1,2,3,2,3,2,4,5,5,6,6,5,5,5,3,3,3,2,2,3,3,3,4,4,4,5,5,6,6,3,3,3,6,6,2,2,3,3,2,2,2,2,5,5,6,6,6,6,1,1,1,1];
 	this.colorLines = "rgb(55,55,200)";		this.colorFill = "rgb(100,100,200)";
 	this.time = 0;
 	this.ofSet = 0;
 	this.step = 1;
 	
 	this.draw = function(time) {
-		if(time%this.mvWight == 0) {
-			var tTi = this.line.splice(0,1);
-			this.line.push(tTi[0]);
-			}
-		var oSet = time%this.mvWight;
-		this.ofSet = time%this.mvWight;
+		var oSet = this.ofSet;
+		//var oSet = time%this.mvWight;
+		//this.ofSet = time%this.mvWight;
 		//console.log(time+" time off set "+oSet);
 		this.canvas.fillStyle = this.colorFill;
 		this.canvas.strokeStyle = this.colorLines;
@@ -45,7 +42,10 @@ enemyMountain = function(ctx,h,w,conf) {
 		}
 		
 	this.update = function(time) {
-
+		if(time%this.mvWight == 0) {
+			var tTi = this.line.splice(0,1);
+			this.line.push(tTi[0]);
+			}
 		this.ofSet = time%this.mvWight;
 		return time; //just a dummy return function
 		}
@@ -97,6 +97,6 @@ enemyMountain = function(ctx,h,w,conf) {
 		} // end of collisionCheck function
 		
 	this.lineToHeight = function(lNumber) {
-		return this.height-(this.line[lNumber]*this.mvHeight);
+		return this.height-(this.line[lNumber]*this.mvHeight)-30;
 		}
 }

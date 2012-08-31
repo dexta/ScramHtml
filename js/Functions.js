@@ -88,7 +88,7 @@ function hudDraw() {
 	}
 	var lSector = "";
 	if(levelNo>1) {  for(ls=1;ls<levelNo;ls++) { lSector += "[**]"; }  }
-	if(levelCount < (500*levelNo)/2) { lSector += "[*-]"; } else { lSector += "[**]" }
+	if(levelCount < ((500*levelNo)/2)-1) { lSector += "[*-]"; } else { lSector += "[**]" }
 	for(var ls=levelNo;ls<6;ls++) { lSector += "[--]"; }
 	if(levelCount > 500*levelNo) {
 		levelNo++;
@@ -125,12 +125,17 @@ function levelUp() {
 		objByTyp.mountain.colorFill = "rgb(110,90,180)";
 		objByTyp.mountain.colorLines = "rgb(50,50,190)";
 		objByTyp.ship.shootLockLength = 50;
+		
+		addObject(new starField(ctx,1,HEIGHT+25,WIDTH+101,configStarField));
+		
 		}
 		
 	if(levelNo == 3) {
 		scoreCount -= missEnemy*10;
 		fuelScore -= missEnemy*10;
-
+		
+		addObject(new starField(ctx,3,HEIGHT+25,WIDTH+201,configStarField));
+		
 		configAntenna["hitPoints"] += 1;
 		objByTyp.mountain.colorFill = "rgb(120,75,150)";
 		objByTyp.mountain.colorLines = "rgb(40,40,180)";
@@ -140,6 +145,10 @@ function levelUp() {
 	if(levelNo == 4) {
 		configFuel["hitPoints"] += 1;
 		configEnemy["hitPoints"] += 1;
+		
+		configStarField["layer"] = 4;
+		addObject(new starField(ctx,6,HEIGHT+25,WIDTH+401,configStarField));
+		
 		objByTyp.mountain.colorFill = "rgb(140,50,80)";
 		objByTyp.mountain.colorLines = "rgb(70,30,100)";
 		objByTyp.ship.shootLockLength = 28;

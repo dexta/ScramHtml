@@ -1,10 +1,11 @@
 var ctx;var WIDHT; var HEIGHT;var canvasBuffer; var canvasView; var canvasMenu;
-var tick;var scoreCount;var enemyToScore; var fuelScore; var levelCount; var levelNo; var missEnemy;
+var tick;var scoreCount;var enemyToScore; var fuelScore; var levelCount; var levelNo; var missEnemy; var hitEnemy;
 var pause = true;	var intervalID = 0;	var hudRefreashID; var intervalUpdate = (1000/60);
 var keys = {left:false,up:false,right:false,down:false,fire:false}; var autoFire;
 var collisionObjects = [];var collisionCheckObjects = []; var drawLayer = [[],[],[],[],[],[]]; var starCraft; var bulletObjcts = [];
 var allObj = [];var objByTyp = {mountain:{},ship:{}};
 var chkCol; var firstStart = true;
+var playerHiScore;
 
 var lockDraw = false;
 var fps = 0,tpd=0,now,lastUpdate = (new Date)*1 -1;
@@ -22,7 +23,7 @@ function init(){
 	fuelScore = 3000;
 	levelCount = 0;
 	levelNo = 1;
-	missEnemy = 0;
+	missEnemy = 0;hitEnemy = 0;
 	allObj = [];
 	canvasBuffer = document.getElementById('canvas'); //$("#canvas")[0ca];
 	ctx = canvasBuffer.getContext('2d');

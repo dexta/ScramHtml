@@ -13,7 +13,7 @@ function draw() {
 		allObj[a].update(tick);
 		drawLayer[allObj[a].layer].push(allObj[a]);
 		if(allObj[a].explodeEnd || false) { 
-			if(allObj[a].objTyp == "enemy" && allObj[a].explodeStart == false) missEnemy++;
+			if(allObj[a].objTyp == "enemy") (allObj[a].explodeStart == false)? missEnemy++ : hitEnemy++;
 			allObj.splice(a,1); continue; 
 			}
 		if(allObj[a].objTyp == "ship") { 

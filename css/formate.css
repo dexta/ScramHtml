@@ -101,7 +101,7 @@ h1, h5{
 
 .hiRow {
 	position: absolute;
-	width: 550px;
+	width: 600px;
 	margin: auto 5px;
 }
 
@@ -110,6 +110,7 @@ h1, h5{
 	float: left;
     font-size: 1.2em;
     width: 90px;
+    margin-left: 9px;
 	text-align: center;
 	border-bottom: 1px solid white;
 }

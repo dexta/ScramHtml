@@ -8,11 +8,11 @@ an arcade game port to canvas line drawing art.
 TODO
 ====
 * hiscore
-** add a user enter name dialog
-** make score local first 
-** find a backend to store on server
+  * add a user enter name dialog
+  * make score local first 
+  * find a backend to store on server
 
 * level design
-** make it hard to play
-** like the orginal is hard to end all stages
-** find new level design (tunnel,cave etc.)
+  * make it hard to play
+  * like the orginal is hard to end all stages
+  * find new level design (tunnel,cave etc.)

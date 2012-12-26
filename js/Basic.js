@@ -5,7 +5,7 @@ var keys = {left:false,up:false,right:false,down:false,fire:false}; var autoFire
 var collisionObjects = [];var collisionCheckObjects = []; var drawLayer = [[],[],[],[],[],[]]; var starCraft; var bulletObjcts = [];
 var allObj = [];var objByTyp = {mountain:{},ship:{}};
 var chkCol; var firstStart = true;
-var playerHiScore;
+var playerHiScore = [];
 
 var lockDraw = false;
 var fps = 0,tpd=0,now,lastUpdate = (new Date)*1 -1;
@@ -43,6 +43,7 @@ function init(){
 	//addObject(new starField(ctx,6,HEIGHT+25,WIDTH+401,configStarField));
 	addObject(new spaceCraft(ctx,400,100,configSpaceCraft));
 	set_enemyLine();
+	get_player2HiScore();
 	intervalSwitsh();
 
 
